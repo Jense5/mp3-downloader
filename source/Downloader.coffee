@@ -16,3 +16,6 @@ download = (uri, file, callback) ->
   winston.info('Download started.')
   request.head uri, (error, response, content) ->
     winston.info('Data received, writing to file.')
+    stream = fs.createWriteStream(file)
+    request(uri).pipe(stream).on 'close', () ->
+      winston.info('Wrote data.')
