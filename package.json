@@ -7,6 +7,9 @@
     "type": "git",
     "url": "git+https://github.com/Jense5/MP3-Downloader.git"
   },
+  "scripts": {
+    "start": "node bin/Commander.js"
+  },
   "keywords": [
     "MP3",
     "downloader",
