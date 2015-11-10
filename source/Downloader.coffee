@@ -82,4 +82,4 @@ downloadSTR = (s) ->
   scrape(source)
 
 # Export the module
-module.export.download = downloadSTR
+module.exports.download = downloadSTR
