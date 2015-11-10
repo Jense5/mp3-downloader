@@ -19,3 +19,4 @@ download = (uri, file, callback) ->
     stream = fs.createWriteStream(file)
     request(uri).pipe(stream).on 'close', () ->
       winston.info('Wrote data.')
+      callback()
