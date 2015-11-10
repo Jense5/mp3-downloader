@@ -36,3 +36,7 @@ downloadTrack = (name, url) ->
   winston.info('Calculated destination.')
   download URI, destination, () ->
     winston.info('Bye.')
+
+# Ask the user to select a track from
+# the given selection.
+askForTrack = (titles, links) ->
