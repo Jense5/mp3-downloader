@@ -14,3 +14,12 @@ module.exports = (Grunt) ->
   Grunt.loadNpmTasks('grunt-contrib-clean')
   Grunt.loadNpmTasks('grunt-contrib-coffee')
   Grunt.loadNpmTasks('grunt-contrib-copy')
+
+  # Configuration for CoffeeScript compilation
+  coffeeConfiguration =
+    glob_to_multiple:
+      expand: true
+      cwd: 'source'
+      src: ['**/*.coffee']
+      dest: 'bin'
+      ext: '.js'
