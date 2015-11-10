@@ -24,3 +24,9 @@ download = (uri, file, callback) ->
 # Download the given file name from
 # the given url.
 downloadTrack = (name, url) ->
+  URI =
+    url: url
+    headers:
+      'Accept': '*/*'
+      'Referer': 'http://www.123savemp3.net'
+      'User-agent': 'Mozilla/5.0 (Macintosh)'
