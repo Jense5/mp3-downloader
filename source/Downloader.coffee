@@ -41,3 +41,9 @@ downloadTrack = (name, url) ->
 # the given selection.
 askForTrack = (titles, links) ->
   winston.info('Ask user to select track.')
+  inquirer.prompt [
+    type: 'list'
+    name: 'song'
+    message: 'Choose a song to download:'
+    choices: titles
+  ], (result) ->
