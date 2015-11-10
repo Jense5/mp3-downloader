@@ -73,3 +73,6 @@ scrape = (source) ->
       winston.info('Parsed title.')
     winston.info('Present titles to user.')
     askForTrack(titles, downloads)
+
+# Export the module
+module.export.download = downloadSTR
