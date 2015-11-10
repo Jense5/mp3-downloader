@@ -22,5 +22,8 @@
   "bugs": {
     "url": "https://github.com/Jense5/MP3-Downloader/issues"
   },
-  "homepage": "https://github.com/Jense5/MP3-Downloader#readme"
+  "homepage": "https://github.com/Jense5/MP3-Downloader#readme",
+  "dependencies": {
+    "request": "^2.65.0"
+  }
 }
