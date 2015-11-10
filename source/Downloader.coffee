@@ -66,4 +66,5 @@ scrape = (source) ->
     links = $('.item').find('.play')
     title = []
     downloads = []
-    winston.info('Fetched results.')
+    winston.info('Fetched links.')
+    $('.item').find('.desc').each (i, element) ->
