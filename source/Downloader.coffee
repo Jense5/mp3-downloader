@@ -24,7 +24,7 @@ download = (uri, file, callback) ->
 # Download the given file name from
 # the given url.
 downloadTrack = (name, url) ->
-  winston.info('Called download track.')
+  winston.info('Going to download track.')
   URI =
     url: url
     headers:
@@ -51,4 +51,5 @@ askForTrack = (titles, links) ->
     name = result['song']
     index = titles.indexOf(name)
     source = 'http://123savemp3.net' + downloads[index]
-    
+    winston.info('Should download: ' + name)
+    downloadTrack(name, source)
