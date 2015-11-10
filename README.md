@@ -9,3 +9,5 @@ It should be easy to use it. It downloads the selected track in the current work
 ```
 $ download avicii waiting for love
 ```
+
+### License
