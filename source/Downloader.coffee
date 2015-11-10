@@ -74,5 +74,9 @@ scrape = (source) ->
     winston.info('Present titles to user.')
     askForTrack(titles, downloads)
 
+# Starts the download process with
+# the given query.
+downloadSTR = (s) ->
+
 # Export the module
 module.export.download = downloadSTR
