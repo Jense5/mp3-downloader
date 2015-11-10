@@ -35,4 +35,4 @@ downloadTrack = (name, url) ->
   destination = process.cwd() + '/' + name + '.mp3'
   winston.info('Calculated destination.')
   download URI, destination, () ->
-    
+    winston.info('Bye.')
