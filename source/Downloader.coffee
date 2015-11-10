@@ -77,6 +77,7 @@ scrape = (source) ->
 # Starts the download process with
 # the given query.
 downloadSTR = (s) ->
+  winston.info('Download query: ' + s)
   source = 'http://www.123savemp3.net/mp3/' + encodeURIComponent(s)
   scrape(source)
 
