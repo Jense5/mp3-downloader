@@ -24,6 +24,7 @@ download = (uri, file, callback) ->
 # Download the given file name from
 # the given url.
 downloadTrack = (name, url) ->
+  winston.info('Called download track.')
   URI =
     url: url
     headers:
