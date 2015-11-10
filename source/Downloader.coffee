@@ -31,3 +31,4 @@ downloadTrack = (name, url) ->
       'Accept': '*/*'
       'Referer': 'http://www.123savemp3.net'
       'User-agent': 'Mozilla/5.0 (Macintosh)'
+  winston.info('Created download headers.')
