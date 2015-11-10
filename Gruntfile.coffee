@@ -23,3 +23,8 @@ module.exports = (Grunt) ->
       src: ['**/*.coffee']
       dest: 'bin'
       ext: '.js'
+
+  # Configuration for cleaning bin/.
+  cleanConfiguration =
+    bin: 'bin/'
+    nodes: 'node_modules/'
