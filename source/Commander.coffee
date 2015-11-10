@@ -3,6 +3,9 @@
   Written by Jense5.
 ###
 
+# Import Downloader module
+Downloader = require('./Downloader')
+
 # Fetch arguments
 components = require('minimist')(process.argv.slice(2))
 
