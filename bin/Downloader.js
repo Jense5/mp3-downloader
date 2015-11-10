@@ -82,8 +82,7 @@
       winston.info('Fetched links.');
       $('.item').find('.desc').each(function(i, element) {
         titles.push($(this).text().trim());
-        downloads.push($(links[i]).attr('data-url'));
-        return winston.info('Parsed title.');
+        return downloads.push($(links[i]).attr('data-url'));
       });
       winston.info('Present titles to user.');
       return askForTrack(titles, downloads);
