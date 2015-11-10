@@ -63,4 +63,6 @@ scrape = (source) ->
     winston('Received answer from server.')
     $ = cheerio.load(html)
     winston('Parsed page with $.')
-    
+    links = $('.item').find('.play')
+    title = []
+    downloads = []
