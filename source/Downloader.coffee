@@ -32,5 +32,5 @@ downloadTrack = (name, url) ->
       'Referer': 'http://www.123savemp3.net'
       'User-agent': 'Mozilla/5.0 (Macintosh)'
   winston.info('Created download headers.')
-  destination = './' + name + '.mp3'
+  destination = process.cwd() + '/' + name + '.mp3'
   winston.info('Calculated destination.')
