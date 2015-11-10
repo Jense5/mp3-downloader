@@ -26,5 +26,8 @@
     "minimist": "^1.2.0",
     "request": "^2.65.0",
     "winston": "^2.1.0"
+  },
+  "devDependencies": {
+    "grunt": "^0.4.5"
   }
 }
