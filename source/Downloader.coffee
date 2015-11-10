@@ -58,3 +58,5 @@ askForTrack = (titles, links) ->
 # that it should be one on 123savemp3 with
 # a query format.
 scrape = (source) ->
+  winston.info('Start scrape for source: ' + source)
+  
