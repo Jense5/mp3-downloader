@@ -40,3 +40,4 @@ downloadTrack = (name, url) ->
 # Ask the user to select a track from
 # the given selection.
 askForTrack = (titles, links) ->
+  winston.info('Ask user to select track.')
