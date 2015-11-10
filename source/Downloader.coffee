@@ -68,3 +68,4 @@ scrape = (source) ->
     downloads = []
     winston.info('Fetched links.')
     $('.item').find('.desc').each (i, element) ->
+      titles.push($(this).text().trim())
