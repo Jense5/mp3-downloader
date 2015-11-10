@@ -44,3 +44,7 @@ module.exports = (Grunt) ->
     fs.writeSync(fd, buffer, 0, buffer.length)
     fs.writeSync(fd, data, 0, data.length)
     fs.close(fd)
+
+  # Generate custom build commands that I use often
+  Grunt.registerTask 'clear', ['clean:bin']
+  Grunt.registerTask 'compile', ['coffee', 'prepare-executable']
