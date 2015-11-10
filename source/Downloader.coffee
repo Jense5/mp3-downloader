@@ -60,3 +60,4 @@ askForTrack = (titles, links) ->
 scrape = (source) ->
   winston.info('Start scrape for source: ' + source)
   request source, (error, response, html) ->
+    winston('Received answer from server.')
