@@ -3,9 +3,6 @@
   "version": "0.0.1",
   "description": "CLI to download MP3's.",
   "main": "bin/Commander.js",
-  "scripts": {
-    "test": "mocha"
-  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Jense5/MP3-Downloader.git"
