@@ -28,3 +28,9 @@ module.exports = (Grunt) ->
   cleanConfiguration =
     bin: 'bin/'
     nodes: 'node_modules/'
+
+  # Add all seperate configurations to
+  # the main GruntConfiguration
+  Grunt.initConfig
+    coffee: coffeeConfiguration
+    clean: cleanConfiguration
