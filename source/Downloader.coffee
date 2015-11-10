@@ -48,3 +48,4 @@ askForTrack = (titles, links) ->
     choices: titles
   ], (result) ->
     winston.info('Received answer from user.')
+    name = result['song']
