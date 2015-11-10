@@ -8,7 +8,7 @@ fs = require('fs')
 winston = require('winston')
 request = require('request')
 cheerio = require('cheerio')
-inquirer = require('requirer')
+inquirer = require('inquirer')
 
 # Download function for downloading
 # a file from url to destination path.
