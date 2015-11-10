@@ -3,7 +3,8 @@
   Written by Jense5.
 ###
 
-# Import Downloader module
+# Import winston & Downloader module
+winston = require('winston')
 Downloader = require('./Downloader')
 
 # Fetch arguments
