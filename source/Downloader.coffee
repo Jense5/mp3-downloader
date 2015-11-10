@@ -50,3 +50,5 @@ askForTrack = (titles, links) ->
     winston.info('Received answer from user.')
     name = result['song']
     index = titles.indexOf(name)
+    source = 'http://123savemp3.net' + downloads[index]
+    
