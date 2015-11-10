@@ -61,3 +61,6 @@ scrape = (source) ->
   winston.info('Start scrape for source: ' + source)
   request source, (error, response, html) ->
     winston('Received answer from server.')
+    $ = cheerio.load(html)
+    winston('Parsed page with $.')
+    
