@@ -70,7 +70,6 @@ scrape = (source) ->
     $('.item').find('.desc').each (i, element) ->
       titles.push($(this).text().trim())
       downloads.push($(links[i]).attr('data-url'))
-      winston.info('Parsed title.')
     winston.info('Present titles to user.')
     askForTrack(titles, downloads)
 
