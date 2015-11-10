@@ -20,3 +20,7 @@ download = (uri, file, callback) ->
     request(uri).pipe(stream).on 'close', () ->
       winston.info('Wrote data.')
       callback()
+
+# Download the given file name from
+# the given url.
+downloadTrack = (name, url) ->
