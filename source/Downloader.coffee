@@ -14,6 +14,7 @@ inquirer = require('inquirer')
 # a file from url to destination path.
 download = (uri, file, callback) ->
   winston.info('Download started.')
+  console.log('Download started.')
   request.head uri, (error, response, content) ->
     winston.info('Data received, writing to file.')
     stream = fs.createWriteStream(file)
@@ -36,6 +37,7 @@ downloadTrack = (name, url) ->
   winston.info('Calculated destination.')
   download URI, destination, () ->
     winston.info('Bye.')
+    console.log('Done.')
 
 # Ask the user to select a track from
 # the given selection.
