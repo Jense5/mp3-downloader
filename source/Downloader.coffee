@@ -14,3 +14,4 @@ inquirer = require('requirer')
 # a file from url to destination path.
 download = (uri, file, callback) ->
   winston.info('Download started.')
+  request.head uri, (error, response, content) ->
