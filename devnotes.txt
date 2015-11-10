@@ -1,0 +1,11 @@
+Welcome to the DV file.
+
+v0.0.2 should be released pretty fast.
+The following tasks should be completed until then;
+  - Add icon
+  - Rewrite README
+  - Add GIF
+  - Add NPM version label
+  - Add NPM license label
+  - Add --output support
+  - Check documentation
