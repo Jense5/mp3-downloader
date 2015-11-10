@@ -12,6 +12,8 @@ It should be easy to use it. It downloads the selected track in the current work
 $ download avicii waiting for love
 ```
 
+This tool is still in beta, please report bugs as fast as possible.
+
 ### License
 
 Distributed under **MIT** by [Jensen Bernard](https://github.com/Jense5).
