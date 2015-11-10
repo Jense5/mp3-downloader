@@ -53,3 +53,8 @@ askForTrack = (titles, links) ->
     source = 'http://123savemp3.net' + downloads[index]
     winston.info('Should download: ' + name)
     downloadTrack(name, source)
+
+# Function to scrape the given page. Note
+# that it should be one on 123savemp3 with
+# a query format.
+scrape = (source) ->
