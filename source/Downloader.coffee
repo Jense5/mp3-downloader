@@ -66,3 +66,4 @@ scrape = (source) ->
     links = $('.item').find('.play')
     title = []
     downloads = []
+    winston.info('Fetched results.')
