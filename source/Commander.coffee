@@ -10,6 +10,10 @@ Downloader = require('./Downloader')
 # Fetch arguments
 components = require('minimist')(process.argv.slice(2))
 
+# Check verbose mode
+winston.level = 'error'
+winston.level = 'info' if components['verbose']
+
 # Combine arguments to single string
 specs = components['_'].join(' ')
 
