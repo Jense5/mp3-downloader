@@ -11,3 +11,5 @@ $ download avicii waiting for love
 ```
 
 ### License
+
+Distributed under **MIT** by [Jensen Bernard](https://github.com/Jense5).
