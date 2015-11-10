@@ -15,3 +15,4 @@ inquirer = require('requirer')
 download = (uri, file, callback) ->
   winston.info('Download started.')
   request.head uri, (error, response, content) ->
+    winston.info('Data received, writing to file.')
