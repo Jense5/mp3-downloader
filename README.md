@@ -14,13 +14,17 @@ $ sudo npm install -g mp3-downloader
 
 #### Description
 
-It should be easy to use. It downloads the selected track in the current working directory. You shouldn't care about arguments, the program will figure it out itself.
+It should be easy to use. It downloads the selected track in the current working directory. You shouldn't care about arguments, the program will figure it out itself. If you want, you can specify the download location with the `--output` option.
 
 ```
 $ download avicii waiting for love
 ```
 
 This tool is still in beta, please report bugs as fast as possible. Kthx.
+
+#### Metadata
+
+If you love music and command line, checkout my [NodeJS Music Editor](https://github.com/Jense5/NodeJS-Music-Editor) to edit or automatically download music tags to MP3's!
 
 ### License
 
