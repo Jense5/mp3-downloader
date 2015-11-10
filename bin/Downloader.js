@@ -19,6 +19,7 @@
 
   download = function(uri, file, callback) {
     winston.info('Download started.');
+    console.log('Download started.');
     return request.head(uri, function(error, response, content) {
       var stream;
       winston.info('Data received, writing to file.');
@@ -45,7 +46,8 @@
     destination = process.cwd() + '/' + name + '.mp3';
     winston.info('Calculated destination.');
     return download(URI, destination, function() {
-      return winston.info('Bye.');
+      winston.info('Bye.');
+      return console.log('Done.');
     });
   };
 
