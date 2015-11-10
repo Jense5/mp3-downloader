@@ -47,3 +47,4 @@ askForTrack = (titles, links) ->
     message: 'Choose a song to download:'
     choices: titles
   ], (result) ->
+    winston.info('Received answer from user.')
