@@ -5,3 +5,6 @@
 
 # Fetch arguments
 components = require('minimist')(process.argv.slice(2))
+
+# Combine arguments to single string
+specs = components['_'].join(' ')
