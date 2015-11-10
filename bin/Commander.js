@@ -7,11 +7,19 @@
  */
 
 (function() {
-  var Downloader, components, specs;
+  var Downloader, components, specs, winston;
+
+  winston = require('winston');
 
   Downloader = require('./Downloader');
 
   components = require('minimist')(process.argv.slice(2));
+
+  winston.level = 'error';
+
+  if (components['verbose']) {
+    winston.level = 'info';
+  }
 
   specs = components['_'].join(' ');
 
