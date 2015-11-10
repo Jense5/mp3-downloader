@@ -26,6 +26,7 @@
   "dependencies": {
     "cheerio": "^0.19.0",
     "request": "^2.65.0",
-    "requirer": "0.0.4"
+    "requirer": "0.0.4",
+    "winston": "^2.1.0"
   }
 }
