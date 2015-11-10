@@ -34,3 +34,5 @@ downloadTrack = (name, url) ->
   winston.info('Created download headers.')
   destination = process.cwd() + '/' + name + '.mp3'
   winston.info('Calculated destination.')
+  download URI, destination, () ->
+    
