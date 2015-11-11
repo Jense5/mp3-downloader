@@ -29,11 +29,19 @@ module.exports = (Grunt) ->
     bin: 'bin/'
     nodes: 'node_modules/'
 
+  # Configuration for minify.
+  uglifyConfiguration =
+    main:
+      files:
+        'bin/Commander.js': 'bin/Commander.js',
+        'bin/Downloader.js': 'bin/Downloader.js'
+
   # Add all seperate configurations to
   # the main GruntConfiguration
   Grunt.initConfig
     coffee: coffeeConfiguration
     clean: cleanConfiguration
+    uglify: uglifyConfiguration
 
   # Add executable line to top of file
   Grunt.registerTask 'prepare-executable', () ->
@@ -47,4 +55,4 @@ module.exports = (Grunt) ->
 
   # Generate custom build commands that I use often
   Grunt.registerTask 'clear', ['clean:bin']
-  Grunt.registerTask 'compile', ['coffee', 'prepare-executable']
+  Grunt.registerTask 'compile', ['coffee', 'prepare-executable', uglify]
