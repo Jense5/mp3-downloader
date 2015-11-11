@@ -1,6 +1,6 @@
 {
   "name": "mp3-downloader",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "CLI to download MP3's.",
   "main": "bin/Commander.js",
   "repository": {
