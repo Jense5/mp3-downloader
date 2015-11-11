@@ -23,7 +23,7 @@ output = null
 output = components['output'] if components['output']?
 
 # Parse output to absolute path
-location = path.resolve(process.cwd(), output)
+location = path.resolve(process.cwd(), output) if components['output']?
 
 # Start download process
-Downloader.download(specs)
+Downloader.download(specs, location)

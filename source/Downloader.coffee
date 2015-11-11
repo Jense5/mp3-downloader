@@ -10,6 +10,9 @@ request = require('request')
 cheerio = require('cheerio')
 inquirer = require('inquirer')
 
+# Store destination
+DEST = null
+
 # Download function for downloading
 # a file from url to destination path.
 download = (uri, file, callback) ->
@@ -33,7 +36,9 @@ downloadTrack = (name, url) ->
       'Referer': 'http://www.123savemp3.net'
       'User-agent': 'Mozilla/5.0 (Macintosh)'
   winston.info('Created download headers.')
-  destination = process.cwd() + '/' + name + '.mp3'
+  destination = DEST
+  if not DEST?
+    destination = process.cwd() + '/' + name + '.mp3'
   winston.info('Calculated destination.')
   download URI, destination, () ->
     winston.info('Bye.')
@@ -77,8 +82,9 @@ scrape = (source) ->
 
 # Starts the download process with
 # the given query.
-downloadSTR = (s) ->
+downloadSTR = (s, p) ->
   winston.info('Download query: ' + s)
+  DEST = p if p?
   source = 'http://www.123savemp3.net/mp3/' + encodeURIComponent(s)
   scrape(source)
 
