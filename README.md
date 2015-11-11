@@ -25,6 +25,8 @@ It should be easy to use. It downloads the selected track in the current working
 $ download avicii waiting for love
 ```
 
+If it does somehow not run as desired, run it in `--verbose` mode.
+
 This tool is still in beta, please report bugs as fast as possible. Checkout [NodeJS Music Editor](https://github.com/Jense5/NodeJS-Music-Editor) to edit & download ID3s for the downloaded tracks. I will combine these two when I find the time.
 
 ### License
