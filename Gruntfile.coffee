@@ -13,6 +13,7 @@ module.exports = (Grunt) ->
   # CoffeeScript and remove files.
   Grunt.loadNpmTasks('grunt-contrib-clean')
   Grunt.loadNpmTasks('grunt-contrib-coffee')
+  Grunt.loadNpmTasks('grunt-contrib-uglify')
 
   # Configuration for CoffeeScript compilation
   coffeeConfiguration =
