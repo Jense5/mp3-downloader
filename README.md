@@ -20,11 +20,7 @@ It should be easy to use. It downloads the selected track in the current working
 $ download avicii waiting for love
 ```
 
-This tool is still in beta, please report bugs as fast as possible. Kthx.
-
-#### Metadata
-
-If you love music and command line, checkout my [NodeJS Music Editor](https://github.com/Jense5/NodeJS-Music-Editor) to edit or automatically download music tags to MP3's!
+This tool is still in beta, please report bugs as fast as possible. Checkout [NodeJS Music Editor](https://github.com/Jense5/NodeJS-Music-Editor) to edit & download ID3s for the downloaded tracks. I will combine these two when I find the time.
 
 ### License
 
