@@ -7,7 +7,7 @@
 
 CLI to download MP3's in **supah** high quality.
 
-<p align="center"><img src="sample.gif" height="200" /></p>
+<p align="center"><img src="sample.gif" height="400" /></p>
 
 #### Installation
 
