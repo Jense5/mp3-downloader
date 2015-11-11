@@ -1,6 +1,7 @@
 # MP3-Downloader
 
-![version](https://img.shields.io/badge/version-beta-blue.svg)
+![version](https://img.shields.io/npm/v/npm.svg)
+![status](https://img.shields.io/badge/version-beta-red.svg)
 
 CLI to download MP3's in **supah** high quality.
 
