@@ -2,6 +2,8 @@
 
 ![version](https://img.shields.io/npm/v/npm.svg)
 ![status](https://img.shields.io/badge/version-beta-red.svg)
+![license](https://img.shields.io/npm/l/mp3-downloader.svg)
+
 
 CLI to download MP3's in **supah** high quality.
 
