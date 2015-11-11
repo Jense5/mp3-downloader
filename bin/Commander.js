@@ -7,7 +7,9 @@
  */
 
 (function() {
-  var Downloader, components, specs, winston;
+  var Downloader, components, location, output, path, specs, winston;
+
+  path = require('path');
 
   winston = require('winston');
 
@@ -23,6 +25,16 @@
 
   specs = components['_'].join(' ');
 
-  Downloader.download(specs);
+  output = null;
+
+  if (components['output'] != null) {
+    output = components['output'];
+  }
+
+  if (components['output'] != null) {
+    location = path.resolve(process.cwd(), output);
+  }
+
+  Downloader.download(specs, location);
 
 }).call(this);

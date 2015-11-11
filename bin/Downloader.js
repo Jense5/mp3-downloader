@@ -5,7 +5,7 @@
  */
 
 (function() {
-  var askForTrack, cheerio, download, downloadSTR, downloadTrack, fs, inquirer, request, scrape, winston;
+  var DEST, askForTrack, cheerio, download, downloadSTR, downloadTrack, fs, inquirer, request, scrape, winston;
 
   fs = require('fs');
 
@@ -16,6 +16,8 @@
   cheerio = require('cheerio');
 
   inquirer = require('inquirer');
+
+  DEST = null;
 
   download = function(uri, file, callback) {
     winston.info('Download started.');
@@ -43,7 +45,10 @@
       }
     };
     winston.info('Created download headers.');
-    destination = process.cwd() + '/' + name + '.mp3';
+    destination = DEST;
+    if (DEST == null) {
+      destination = process.cwd() + '/' + name + '.mp3';
+    }
     winston.info('Calculated destination.');
     return download(URI, destination, function() {
       winston.info('Bye.');
@@ -91,9 +96,12 @@
     });
   };
 
-  downloadSTR = function(s) {
+  downloadSTR = function(s, p) {
     var source;
     winston.info('Download query: ' + s);
+    if (p != null) {
+      DEST = p;
+    }
     source = 'http://www.123savemp3.net/mp3/' + encodeURIComponent(s);
     return scrape(source);
   };
