@@ -55,4 +55,4 @@ module.exports = (Grunt) ->
 
   # Generate custom build commands that I use often
   Grunt.registerTask 'clear', ['clean:bin']
-  Grunt.registerTask 'compile', ['coffee', 'prepare-executable', uglify]
+  Grunt.registerTask 'compile', ['coffee', 'prepare-executable', 'uglify']
