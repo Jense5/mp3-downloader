@@ -7,6 +7,8 @@
 
 CLI to download MP3's in **supah** high quality.
 
+<iframe style="margin: 0 auto;width:100%;" src="http://i.giflike.com/embed/nJ3TFpM" width="600" height="298" scrolling="no"></iframe>
+
 #### Installation
 
 Install it via **npm**. Make sure to update it regularly to have the latest download settings. This is ***important***! So before reporting a bug, try to update.
