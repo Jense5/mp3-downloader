@@ -47,19 +47,27 @@ downloadTrack = (name, url) ->
 # Ask the user to select a track from
 # the given selection.
 askForTrack = (titles, links) ->
-  winston.info('Ask user to select track.')
-  inquirer.prompt [
+  winston.info('Ask user to select a song.')
+  inquirer.prompt [{
+    type: 'confirm'
+    name: 'ready'
+    message: 'Are you ready to pick a song?'}, {
+    when: (response) -> return response['ready']
     type: 'list'
     name: 'song'
     message: 'Choose a song to download:'
-    choices: titles
+    choices: titles}
   ], (result) ->
-    winston.info('Received answer from user.')
-    name = result['song']
-    index = titles.indexOf(name)
-    source = 'http://123savemp3.net' + links[index]
-    winston.info('Should download: ' + name)
-    downloadTrack(name, source)
+    if result['ready']
+      winston.info('Received answer from user.')
+      name = result['song']
+      index = titles.indexOf(name)
+      source = 'http://123savemp3.net' + links[index]
+      winston.info('Should download: ' + name)
+      downloadTrack(name, source)
+    else
+      winston.info('Bye.')
+      console.log('Done.')
 
 # Function to scrape the given page. Note
 # that it should be one on 123savemp3 with
