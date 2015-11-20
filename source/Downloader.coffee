@@ -82,14 +82,14 @@ scrape = (source) ->
     titles = []
     downloads = []
     winston.info('Fetched links.')
-    if titles? && downloads?
-      console.log("No results found. Please try another query")
-    else
-      $('.item').find('.desc').each (i, element) ->
-        titles.push($(this).text().trim())
-        downloads.push($(links[i]).attr('data-url'))
-      winston.info('Present titles to user.')
+    $('.item').find('.desc').each (i, element) ->
+      titles.push($(this).text().trim())
+      downloads.push($(links[i]).attr('data-url'))
+    winston.info('Present titles to user.')
+    if titles.length > 0
       askForTrack(titles, downloads)
+    else
+      console.log('No results found.')
 
 
 
