@@ -1,6 +1,7 @@
 # MP3-Downloader
 
 ![version](https://img.shields.io/npm/v/mp3-downloader.svg)
+![downloads](https://img.shields.io/npm/dt/mp3-downloader.svg)
 ![status](https://img.shields.io/badge/version-beta-green.svg)
 ![license](https://img.shields.io/npm/l/mp3-downloader.svg)
 
