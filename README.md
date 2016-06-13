@@ -1,38 +1,14 @@
 # Captusi
-***Formerly MP3-Downloader***
-
-
-
-# MP3-Downloader
 
 ![version](https://img.shields.io/npm/v/mp3-downloader.svg)
 ![downloads](https://img.shields.io/npm/dt/mp3-downloader.svg)
 ![status](https://img.shields.io/badge/version-beta-green.svg)
 ![license](https://img.shields.io/npm/l/mp3-downloader.svg)
 
+This command line tool to capture high quality audio files in no time. Navigate through a huge library of 320mbps audio files to find the files you want. No inspiration? Check out the most popular downloads in the trending section. A full walkthrough of all the available commands can be found on the wiki on [Github](http://example.com) which you can find  [here](http://example.com).
 
-CLI to download MP3's in **supah** high quality.
+The servers Captusi uses are changing every couple weeks or months. Most changes are minor ones, which won't affect the tool. However, big server-side changes may cause the tool to crash or unable to find content. If this is the case, please do not hesitate to post issues on [Github](http://example.com) so I can solve it as fast as possible. For more information about bugs or general questions, contact me via [Github](http://example.com) or [Twitter](http://example.com).
 
-#### Installation
+Note that is tool is still in beta. I will create a stable version as fast as possible, but with constantly changing servers, it is pretty hard to make a stable one. Whenever something is not working, try to update the module before taking further steps. Making sure you always have the newest version as this is very important to help debugging the tool.
 
-Install it via **npm**. Make sure to update it regularly to have the latest download settings. This is ***important***! So before reporting a bug, try to update.
-
-```
-$ sudo npm install -g mp3-downloader
-```
-
-#### Description
-
-It should be easy to use. It downloads the selected track in the current working directory. You shouldn't care about arguments, the program will figure it out itself. If you want, you can specify the download location with the `--output` option.
-
-```
-$ download avicii waiting for love
-```
-
-If it does somehow not run as desired, run it in `--verbose` mode.
-
-This tool is still in beta, please report bugs as fast as possible. 
-
-### License
-
-Distributed under **MIT** by [Jensen Bernard](https://github.com/Jense5).
+Check the license file and wiki for more information about permissions.
