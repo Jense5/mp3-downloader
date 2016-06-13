@@ -62,9 +62,12 @@ askForTrack = (titles, links) ->
       winston.info('Received answer from user.')
       name = result['song']
       index = titles.indexOf(name)
-      source = 'http://123savemp3.net' + links[index]
-      winston.info('Should download: ' + name)
-      downloadTrack(name, source)
+      source = links[index]
+      request source, (error, response, html) ->
+        winston.error(error) if error
+        downloadLocation = html.match(/window.open\("(.)*"\);/g)[0].slice(13,-4)
+        winston.info('Should download: ' + downloadLocation)
+        downloadTrack(name, downloadLocation)
     else
       winston.info('Bye.')
       console.log('Done.')
@@ -78,13 +81,15 @@ scrape = (source) ->
     winston.info('Received answer from server.')
     $ = cheerio.load(html)
     winston.info('Parsed page with $.')
-    links = $('.item').find('.play')
+    newdata = $('.playlist').find('.track')
     titles = []
     downloads = []
     winston.info('Fetched links.')
-    $('.item').find('.desc').each (i, element) ->
-      titles.push($(this).text().trim())
-      downloads.push($(links[i]).attr('data-url'))
+    newdata.each (i, element) ->
+      newTrack = $(element).find('.name').text().trim()
+      newArtist = $(element).find('.artist').text().trim()
+      titles.push(newTrack + ' - ' + newArtist)
+      downloads.push($(element).find('.dw').attr('onclick').trim().slice(13,-12))
     winston.info('Present titles to user.')
     if titles.length > 0
       askForTrack(titles, downloads)
@@ -98,7 +103,7 @@ scrape = (source) ->
 downloadSTR = (s, p) ->
   winston.info('Download query: ' + s)
   DEST = p if p?
-  source = 'http://www.123savemp3.net/mp3/' + encodeURIComponent(s)
+  source = 'http://www.my-free-mp3.com/mp3/' + encodeURIComponent(s)
   scrape(source)
 
 # Export the module
