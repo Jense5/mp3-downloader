@@ -11,4 +11,4 @@ The servers Captusi uses are changing every couple weeks or months. Most changes
 
 Note that is tool is still in beta. I will create a stable version as fast as possible, but with constantly changing servers, it is pretty hard to make a stable one. Whenever something is not working, try to update the module before taking further steps. Making sure you always have the newest version as this is very important to help debugging the tool.
 
-Check the license file and wiki for more information about permissions.
+Check the license file and wiki for more information about permissions. You need more information or specific request? Send me an email, contact me via [Github](http://example.com) or [Twitter](http://example.com). I will always try to answer as fast as possible. Have fun!
