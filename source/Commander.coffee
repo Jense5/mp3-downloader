@@ -16,7 +16,10 @@ winston.level = 'error'
 winston.level = 'info' if components['verbose']
 
 # Combine arguments to single string
-specs = components['_'].join(' ')
+if components['_'].length == 0
+  console.log('No query povided!')
+  process.exit()
+specs = components['_'][0]
 
 # Fetch the output argument.
 output = null
