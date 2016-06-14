@@ -1,1 +1,145 @@
-(function(){var a,b,c,d,e,f,g,h,i,j,k;g=require("fs"),k=require("winston"),i=require("request"),c=require("cheerio"),h=require("inquirer"),a=null,d=function(a,b,c){return k.info("Download started."),console.log("Download started."),i.head(a,function(d,e,f){var h;return k.info("Data received, writing to file."),h=g.createWriteStream(b),i(a).pipe(h).on("close",function(){return k.info("Wrote data."),c()})})},f=function(b,c){var e,f;return k.info("Going to download track."),e={url:c,headers:{Accept:"*/*","User-agent":"Mozilla/5.0 (Macintosh)"}},k.info("Created download headers."),f=a,null==a&&(f=process.cwd()+"/"+b+".mp3"),k.info("Calculated destination."),d(e,f,function(){return k.info("Bye."),console.log("Done.")})},b=function(a,b){return k.info("Ask user to select a song."),h.prompt([{type:"confirm",name:"ready",message:"Are you ready to pick a song?"},{when:function(a){return a.ready},type:"list",name:"song",message:"Choose a song to download:",choices:a}],function(c){var d,e,g;return c.ready?(k.info("Received answer from user."),e=c.song,d=a.indexOf(e),g=b[d],i(g,function(a,b,c){var d;return a&&k.error(a),d=c.match(/window.open\("(.)*"\);/g)[0].slice(13,-4),k.info("Should download: "+d),f(e,d)})):(k.info("Bye."),console.log("Done."))})},j=function(a){return k.info("Start scrape for source: "+a),i(a,function(a,d,e){var f,g,h,i;return k.info("Received answer from server."),f=c.load(e),k.info("Parsed page with $."),h=f(".playlist").find(".track"),i=[],g=[],k.info("Fetched links."),h.each(function(a,b){var c,d;return d=f(b).find(".name").text().trim(),c=f(b).find(".artist").text().trim(),i.push(d+" - "+c),g.push(f(b).find(".dw").attr("onclick").trim().slice(13,-12))}),k.info("Present titles to user."),i.length>0?b(i,g):console.log("No results found.")})},e=function(b,c){var d;return k.info("Download query: "+b),null!=c&&(a=c),d="http://www.my-free-mp3.com/mp3/"+encodeURIComponent(b),j(d)},module.exports.download=e}).call(this);
+
+/*
+  Downloader module for MP3 Downloader.
+  Written by Jense5.
+ */
+
+(function() {
+  var CORESOURCE, DEST, askForTrack, cheerio, download, downloadSTR, downloadTrack, fs, handleStatus, inquirer, request, scrape, winston;
+
+  fs = require('fs');
+
+  winston = require('winston');
+
+  request = require('request');
+
+  cheerio = require('cheerio');
+
+  inquirer = require('inquirer');
+
+  DEST = null;
+
+  CORESOURCE = 'http://www.my-free-mp3.com/mp3/';
+
+  handleStatus = function(error, response) {
+    winston.info('Processing response...');
+    if (error) {
+      winston.error('Error: ' + error);
+    }
+    if (error) {
+      process.exit();
+    }
+    winston.info('Status Code: ' + response.statusCode);
+    if (response.statusCode !== 200) {
+      winson.error('Invalid Status Code: ' + response.statusCode);
+      return process.exit();
+    }
+  };
+
+  download = function(uri, file, callback) {
+    console.log('Download started.');
+    return request.head(uri, function(error, response, content) {
+      var stream;
+      handleStatus(error, response);
+      winston.info('Write Data to File');
+      stream = fs.createWriteStream(file);
+      return request(uri).pipe(stream).on('close', function() {
+        return callback();
+      });
+    });
+  };
+
+  downloadTrack = function(name, url) {
+    var URI, destination;
+    winston.info('Start Track Download');
+    URI = {
+      url: url,
+      headers: {
+        'Accept': '*/*',
+        'User-agent': 'Mozilla/5.0 (Macintosh)'
+      }
+    };
+    winston.info('Created download headers.');
+    destination = DEST;
+    if (DEST == null) {
+      destination = process.cwd() + '/' + name + '.mp3';
+    }
+    winston.info('Set path to ' + destination);
+    return download(URI, destination, function() {
+      return console.log('Done.');
+    });
+  };
+
+  askForTrack = function(titles, links) {
+    winston.info('Ask User Input');
+    return inquirer.prompt([
+      {
+        type: 'confirm',
+        name: 'ready',
+        message: 'Multiple files found. You want to choose?'
+      }, {
+        when: function(response) {
+          return response['ready'];
+        },
+        type: 'list',
+        name: 'song',
+        message: 'Choose a song to download:',
+        choices: titles
+      }
+    ], function(result) {
+      var name, source;
+      if (result['ready']) {
+        winston.info('Received Choice: ' + result['song']);
+        name = result['song'];
+        source = links[titles.indexOf(name)];
+        request(source, function(error, response, html) {
+          var downloadLocation;
+          handleStatus(error, response);
+          downloadLocation = html.match(/window.open\("(.)*"\);/g)[0].slice(13, -4);
+          winston.info('Should Download: ' + downloadLocation);
+          return downloadTrack(name, downloadLocation);
+        });
+      }
+      if (!result['ready']) {
+        return console.log('Done.');
+      }
+    });
+  };
+
+  scrape = function(source) {
+    winston.info('Fetch Source: ' + source);
+    return request(source, function(error, response, html) {
+      var $, downloads, newdata, ref, titles;
+      handleStatus(error, response);
+      $ = cheerio.load(html);
+      winston.info('Converted Source to Cheerio');
+      newdata = $('.playlist').find('.track');
+      ref = [[], []], titles = ref[0], downloads = ref[1];
+      winston.info('Fetched Elements');
+      newdata.each(function(i, element) {
+        var newArtist, newTrack;
+        newTrack = $(element).find('.name').text().trim();
+        newArtist = $(element).find('.artist').text().trim();
+        titles.push(newTrack + ' - ' + newArtist);
+        return downloads.push($(element).find('.dw').attr('onclick').trim().slice(13, -12));
+      });
+      if (titles.length > 0) {
+        return askForTrack(titles, downloads);
+      } else {
+        return console.log('No results found.');
+      }
+    });
+  };
+
+  downloadSTR = function(str, pth) {
+    if (pth != null) {
+      DEST = pth;
+    }
+    winston.info('Download query: ' + str);
+    winston.info('Path set: ' + DEST);
+    return scrape(CORESOURCE + encodeURIComponent(str));
+  };
+
+  module.exports.download = downloadSTR;
+
+}).call(this);
