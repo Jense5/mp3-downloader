@@ -21,7 +21,7 @@ handleStatus = (error, response) ->
   process.exit() if error
   winston.info('Status Code: ' + response.statusCode)
   if response.statusCode != 200
-    winson.error('Invalid Status Code: ' + response.statusCode)
+    winston.error('Invalid Status Code: ' + response.statusCode)
     process.exit()
 
 # Download function for downloading a file from url to destination path.
