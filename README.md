@@ -7,11 +7,7 @@
 
 This command line tool to capture high quality audio files in no time. Navigate through a huge library of 320mbps audio files to find the files you want. A full walkthrough of all the available commands can be found on the wiki on [Github](http://example.com) which you can find  [here](http://example.com).
 
-Because of renaming issues, you should still install Captusi with the old package name, mp3-downloader. I will fix this in the future, but for now the package name remains the same. However the command name is changed to captusi.
-
-```js
-$ npm install mp3-downloader
-```
+Because of renaming issues, you should still install Captusi with the old package name, mp3-downloader. I will fix this in the future, but for now the package name remains the same. However the command name is changed to captusi. For more info about the installation instructions, check the [wiki](http://example.com).
 
 The servers Captusi uses are changing every couple weeks or months. Most changes are minor ones, which won't affect the tool. However, big server-side changes may cause the tool to crash or unable to find content. If this is the case, please do not hesitate to post issues on [Github](http://example.com) so I can solve it as fast as possible. For more information about bugs or general questions, contact me via [Github](http://example.com) or [Twitter](http://example.com).
 
