@@ -11,6 +11,10 @@ Downloader = require('./Downloader')
 # Fetch arguments
 components = require('minimist')(process.argv.slice(2))
 
+if components['version']
+  console.log('Captusi v0.2.0')
+  process.exit()
+
 # Check verbose mode
 winston.level = 'error'
 winston.level = 'info' if components['verbose']

@@ -15,6 +15,11 @@
 
   components = require('minimist')(process.argv.slice(2));
 
+  if (components['version']) {
+    console.log('Captusi v0.2.0');
+    process.exit();
+  }
+
   winston.level = 'error';
 
   if (components['verbose']) {
