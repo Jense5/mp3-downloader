@@ -1,11 +1,11 @@
 {
   "name": "mp3-downloader",
   "version": "0.2.0",
-  "description": "CLI to download MP3's.",
+  "description": "simple mp3 downloader",
   "main": "bin/Commander.js",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Jense5/MP3-Downloader.git"
+    "url": "git+https://github.com/Jense5/captusi.git"
   },
   "scripts": {
     "start": "node bin/Commander.js"
@@ -18,14 +18,15 @@
     "downloader",
     "Node",
     "JS",
-    "module"
+    "module",
+    "captusi"
   ],
   "author": "Jensen Bernard",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/Jense5/MP3-Downloader/issues"
+    "url": "https://github.com/Jense5/captusi/issues"
   },
-  "homepage": "https://github.com/Jense5/MP3-Downloader#readme",
+  "homepage": "https://github.com/Jense5/captusi#readme",
   "dependencies": {
     "cheerio": "^0.19.0",
     "grunt-contrib-clean": "^0.6.0",

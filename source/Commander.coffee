@@ -1,8 +1,3 @@
-###
-  Commander module for MP3 Downloader.
-  Written by Jense5.
-###
-
 # Import winston & Downloader module
 path = require('path')
 winston = require('winston')
