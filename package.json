@@ -11,7 +11,7 @@
     "start": "node bin/Commander.js"
   },
   "bin": {
-    "download": "bin/Commander.js"
+    "captusi": "bin/Commander.js"
   },
   "keywords": [
     "MP3",
