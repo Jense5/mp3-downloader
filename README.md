@@ -1,9 +1,12 @@
 # Captusi
 
+
 ![version](https://img.shields.io/npm/v/mp3-downloader.svg)
 ![downloads](https://img.shields.io/npm/dt/mp3-downloader.svg)
 ![status](https://img.shields.io/badge/version-beta-green.svg)
 ![license](https://img.shields.io/npm/l/mp3-downloader.svg)
+
+To stay up to date, follow me on [Twitter](https://twitter.com/PreShove).
 
 This command line tool to capture high quality audio files in no time. Navigate through a huge library of 320mbps audio files to find the files you want. A full walkthrough of all the available commands can be found on the wiki on [Github](https://github.com/Jense5/) which you can find [here](https://github.com/Jense5/captusi/wiki/Tutorial).
 
