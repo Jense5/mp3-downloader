@@ -8,6 +8,7 @@ import Promise from 'bluebird';
 import Youtube from 'youtube-node';
 import YoutubeDL from 'youtube-dl';
 import { iTunes } from 'itunes-info';
+import spinner from './spinner';
 
 const timeStrToMillis = (str) => {
   const units = { S: 1000, M: 1000 * 60, H: 1000 * 60 * 60, D: 1000 * 60 * 60 * 24 };
@@ -29,6 +30,7 @@ const expandYoutube = (youtube, element) => new Promise((resolve, reject) => {
 });
 
 export const fetchFromiTunes = (options: Object) => iTunes.fetch(options.query).then((data) => {
+  spinner.text = 'Fetching iTunes data...';
   if (data.results.length < 1) { throw new Error('No results!'); }
   const tracks = data.results.filter(res => res.kind === 'song');
   if (tracks.length < 1) { throw new Error('No tracks!'); }
@@ -42,6 +44,7 @@ export const fetchFromiTunes = (options: Object) => iTunes.fetch(options.query).
 });
 
 export const fetchFromYoutube = (options: Object) => new Promise((resolve, reject) => {
+  spinner.text = 'Finding Youtube match...';
   const youtube = new Youtube();
   youtube.setKey(options.token);
   youtube.search(options.query, options.results, (error, results) => {
@@ -60,6 +63,7 @@ export const fetchFromYoutube = (options: Object) => new Promise((resolve, rejec
 });
 
 export const setMetadata = (options: Object) => new Promise((resolve, reject) => {
+  spinner.text = 'Writing metadata...';
   http.get(options.artworkUrl512, (response) => {
     if (response.statusCode === 200) {
       response.pipe(fs.createWriteStream(options.path.image)).on('finish', () => {
@@ -82,6 +86,7 @@ export const setMetadata = (options: Object) => new Promise((resolve, reject) =>
 });
 
 export const download = (options: Object) => new Promise((resolve, reject) => {
+  spinner.text = 'Downloading track...';
   const conf = [
     '--extract-audio',
     '--audio-quality', '0',
