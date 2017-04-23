@@ -1,2 +1,0 @@
-#!/usr/bin/env node
-(function(){var a,b,c,d,e,f,g;e=require("path"),g=require("winston"),a=require("./Downloader"),b=require("minimist")(process.argv.slice(2)),b.version&&(console.log("Captusi v0.2.1"),process.exit()),g.level="error",b.verbose&&(g.level="info"),0===b._.length&&(console.log("No query povided!"),process.exit()),f=b._[0],d=null,null!=b.output&&(d=b.output),null!=b.output&&(c=e.resolve(process.cwd(),d)),a.download(f,c)}).call(this);

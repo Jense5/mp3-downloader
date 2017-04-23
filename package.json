@@ -1,44 +1,53 @@
 {
-  "name": "mp3-downloader",
-  "version": "0.2.1",
-  "description": "simple mp3 downloader",
-  "main": "bin/Commander.js",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/Jense5/captusi.git"
-  },
-  "scripts": {
-    "start": "node bin/Commander.js"
-  },
-  "bin": {
-    "captusi": "bin/Commander.js"
-  },
-  "keywords": [
-    "MP3",
-    "downloader",
-    "Node",
-    "JS",
-    "module",
-    "captusi"
+  "name": "music-downloader",
+  "version": "0.0.0-dev.0",
+  "description": "A simple command line music downloader from YouTube",
+  "repository": "https://github.com/Jense5/music-downloader",
+  "author": [
+    "Jensen Bernard <jensenbernard5@gmail.com> (twitter.com/Jense5_)",
+    "Jochen Bernard <jochenbernard@gmail.com>"
   ],
-  "author": "Jensen Bernard",
   "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/Jense5/captusi/issues"
+  "keywords": [ "music-downloader" ],
+  "files": [ "dist", "README.md" ],
+  "main": "./dist/index.js",
+  "bin": { "music-downloader": "./dist/cli.js" },
+  "scripts": {
+    "start": "node ./dist/cli.js",
+    "prebuild": "rimraf dist",
+    "build": "babel src -d dist --copy-files",
+    "build:watch": "npm run build && npm run build -- -w",
+    "eslint": "eslint src test",
+    "flow": "flow; test $? -eq 0 -o $? -eq 2",
+    "pretest": "npm run eslint && npm run flow",
+    "test": "mocha test --compilers js:babel-core/register",
+    "test:watch": "npm run test -- -w",
+    "cover": "nyc npm run test",
+    "cover:check": "nyc check-coverage --statements 80 --branches 80 --functions 80 --lines 80",
+    "cover:report": "nyc report --reporter=text-lcov > coverage.lcov && codecov"
   },
-  "homepage": "https://github.com/Jense5/captusi#readme",
   "dependencies": {
-    "cheerio": "^0.19.0",
-    "grunt-contrib-clean": "^0.6.0",
-    "inquirer": "^0.11.0",
-    "minimist": "^1.2.0",
-    "request": "^2.65.0",
-    "winston": "^2.1.0"
+    "chalk": "^1.1.3",
+    "commander": "^2.9.0",
+    "winston": "^2.3.0"
   },
   "devDependencies": {
-    "grunt": "^0.4.5",
-    "grunt-cli": "^0.1.13",
-    "grunt-contrib-coffee": "^0.13.0",
-    "grunt-contrib-uglify": "^0.10.0"
+    "babel-cli": "^6.18.0",
+    "babel-core": "^6.21.0",
+    "babel-eslint": "^7.1.1",
+    "babel-plugin-transform-flow-strip-types": "^6.21.0",
+    "babel-preset-env": "^1.1.8",
+    "chai": "^3.5.0",
+    "codecov": "^1.0.1",
+    "eslint": "^3.13.1",
+    "eslint-config-airbnb": "^14.0.0",
+    "eslint-plugin-flowtype": "^2.30.0",
+    "eslint-plugin-import": "^2.2.0",
+    "eslint-plugin-jsx-a11y": "^3.0.2",
+    "eslint-plugin-react": "^6.9.0",
+    "flow-bin": "^0.37.4",
+    "mocha": "^3.2.0",
+    "nyc": "^10.1.2",
+    "rimraf": "^2.5.4"
   }
 }
