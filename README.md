@@ -8,7 +8,9 @@ $ npm install mp3-downloader -g
 
 # You will need a Youtube token to start because this tool uses
 # the API instead of a scraper. This way it shouldn't be updated
-# whenever the site changes. See the guide below to get one.
+# whenever the site changes. You can get your free Youtube Data
+# API token via the google developer console
+# https://console.developers.google.com
 $ mp3 --token "XYZ" --save-token
 
 # From now on, download music as much as you want. If no output
@@ -25,12 +27,6 @@ $ mp3 "Byte Martin Garrix" --results 25
 # For more info, check the help.
 $ mp3 --help
 ```
-
-<h4 align="center">Get a Youtube Token</h4>
-
-Go to the [Google Developer Console](https://console.developers.google.com) and create a free YouTube Data API token. You can use this token to download music with this command line tool. Have fun!
-
-<br />
 <p align="center">
   <a href="https://js.org" target="_blank" title="JS.ORG | JavaScript Community">
   <img src="https://logo.js.org/dark_horz.png" width="102" alt="JS.ORG Logo"/></a>
