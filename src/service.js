@@ -1,15 +1,19 @@
 // @flow
 
+import fs from 'fs';
+import http from 'http';
 import path from 'path';
+import nodeID3 from 'node-id3';
 import Promise from 'bluebird';
 import Youtube from 'youtube-node';
+import YoutubeDL from 'youtube-dl';
 import { iTunes } from 'itunes-info';
 
 const timeStrToMillis = (str) => {
   const units = { S: 1000, M: 1000 * 60, H: 1000 * 60 * 60, D: 1000 * 60 * 60 * 24 };
   const content = str.replace('PT', '');
-  const numbers = content.split(/\D/g);
-  const symbols = content.match(/\D/g);
+  const numbers = content.split(/\D/g).filter(e => !!e);
+  const symbols = content.match(/\D/g).filter(e => !!e);
   return numbers.reduce((a, b, i) => a + (b * units[symbols[i]]), 0);
 };
 
@@ -46,13 +50,47 @@ export const fetchFromYoutube = (options: Object) => new Promise((resolve, rejec
     return Promise.map(results.items, res => expandYoutube(youtube, res), { concurrency: 50 })
     .then((videos) => {
       const list = videos.filter(v => !!v);
-      list.forEach((res) => { res.timeDifference = res.durationMillis - options.duration; });
-      list.sort((a, b) => a - b);
+      list.forEach((res) => {
+        res.timeDifference = Math.abs(res.durationMillis - options.trackTimeMillis);
+      });
+      list.sort((a, b) => a.timeDifference - b.timeDifference);
       resolve({ ...options, ...list[0] });
     });
   });
 });
 
-export const download = (options: Object) =>
-  fetchFromiTunes(options)
-  .then(track => fetchFromYoutube({ ...options, ...track }));
+export const setMetadata = (options: Object) => new Promise((resolve, reject) => {
+  http.get(options.artworkUrl512, (response) => {
+    if (response.statusCode === 200) {
+      response.pipe(fs.createWriteStream(options.path.image)).on('finish', () => {
+        nodeID3.removeTags(options.path.file);
+        const success = nodeID3.write({
+          title: options.trackCensoredName,
+          artist: options.artistName,
+          album: options.collectionCensoredName,
+          image: options.path.image,
+          trackNumber: options.trackNumber,
+          genre: options.primaryGenreName,
+          date: options.releaseDate,
+          year: options.releaseDate.substring(0, 4),
+        }, options.path.file);
+        if (!success) { return reject(new Error('Unable to write metadata!')); }
+        return fs.unlink(options.path.image, resolve);
+      });
+    } else { reject(new Error('Unable to fetch metadata!')); }
+  });
+});
+
+export const download = (options: Object) => new Promise((resolve, reject) => {
+  const conf = [
+    '--extract-audio',
+    '--audio-quality', '0',
+    '--format', 'bestaudio',
+    '--audio-format', 'mp3',
+    '--output', path.resolve(options.directory, `${options.filename}.%(ext)s`),
+  ];
+  YoutubeDL.exec(options.link, conf, (error) => {
+    if (error) { return reject(error); }
+    return setMetadata(options).then(resolve).catch(reject);
+  });
+});
