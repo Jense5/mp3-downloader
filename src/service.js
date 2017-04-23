@@ -8,7 +8,6 @@ import Promise from 'bluebird';
 import Youtube from 'youtube-node';
 import YoutubeDL from 'youtube-dl';
 import { iTunes } from 'itunes-info';
-import childProcess from 'child_process';
 import spinner from './spinner';
 
 const timeStrToMillis = (str) => {
