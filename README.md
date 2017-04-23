@@ -10,8 +10,8 @@
 ### Default scripts
 
 ```sh
-$ npm install           # Install dependencies 
-$ npm run start         # Start the build cli 
+$ npm install           # Install dependencies
+$ npm run start         # Start the build cli
 $ npm run build         # Build the source
 $ npm run build:watch   # Watch the build
 $ npm run test          # Run the tests
@@ -62,3 +62,12 @@ $ npm run commit
   <a href="https://js.org" target="_blank" title="JS.ORG | JavaScript Community">
   <img src="https://logo.js.org/dark_horz.png" width="102" alt="JS.ORG Logo"/></a>
 </p>
+
+### Options
+
+- query
+- directory
+- token
+- results
+
+We have to add a return statement on line 161 of youtube-dl.js of youtube-dl in order to get progress stats!
