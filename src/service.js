@@ -8,6 +8,7 @@ import Promise from 'bluebird';
 import Youtube from 'youtube-node';
 import YoutubeDL from 'youtube-dl';
 import { iTunes } from 'itunes-info';
+import childProcess from 'child_process';
 import spinner from './spinner';
 
 const timeStrToMillis = (str) => {
@@ -89,13 +90,21 @@ export const download = (options: Object) => new Promise((resolve, reject) => {
   spinner.text = 'Downloading track...';
   const conf = [
     '--extract-audio',
-    '--audio-quality', '0',
-    '--format', 'bestaudio',
-    '--audio-format', 'mp3',
-    '--output', path.resolve(options.directory, `${options.filename}.%(ext)s`),
+    '--audio-quality=0',
+    '--format=bestaudio',
+    '--audio-format=mp3',
+    `--output=${path.resolve(options.directory, `${options.filename}.%(ext)s`)}`,
   ];
-  YoutubeDL.exec(options.link, conf, (error) => {
-    if (error) { return reject(error); }
-    return setMetadata(options).then(resolve).catch(reject);
+  const downloadProcess = YoutubeDL.exec(options.link, conf, () => {
+    setMetadata(options).then(resolve).catch(reject);
+  });
+  downloadProcess.stdout.on('data', (data) => {
+    const re = /[0-9]+((\.[0-9]{1}){0,1})%/i;
+    const matches = data.match(re);
+    if (matches && matches.length && matches.length > 0) {
+      const percentage = matches[0];
+      const text = percentage !== '100%' ? `Downloading track... ${percentage}` : 'Converting...';
+      spinner.text = text;
+    }
   });
 });
