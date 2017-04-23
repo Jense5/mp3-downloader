@@ -1,14 +1,10 @@
 
-<h1 align="center">Music Downloader</h1>
+<h1>Music Downloader</h1>
 
-<p align="center">
- <img src="https://img.shields.io/npm/v/mp3-downloader.svg" />
- <img src="https://img.shields.io/npm/dt/mp3-downloader.svg" />
-</p>
+<img src="https://img.shields.io/npm/v/mp3-downloader.svg" />
+<img src="https://img.shields.io/npm/dt/mp3-downloader.svg" />
 
 Command line tool to download mp3 files with metadata! All information, including album arts, are fetched from iTunes. Youtube is used to download the music. The correct result from Youtube is matched on the first result of iTunes based on the time in milliseconds. Make sure to get your free Youtube Data API token from the Google Developer Console.
-
-<h4 align="center">QuickStart</h4>
 
 ```sh
 # Install it on your system.
@@ -35,7 +31,6 @@ $ mp3 "Byte Martin Garrix" --results 25
 # For more info, check the help.
 $ mp3 --help
 ```
-<br />
 <p align="center">
   <a href="https://js.org" target="_blank" title="JS.ORG | JavaScript Community">
   <img src="https://logo.js.org/dark_horz.png" width="102" alt="JS.ORG Logo"/></a>
