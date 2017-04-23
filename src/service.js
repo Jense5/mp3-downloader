@@ -21,7 +21,7 @@ const timeStrToMillis = (str) => {
 
 const expandYoutube = (youtube, element) => new Promise((resolve, reject) => {
   youtube.getById(element.id.videoId, (error, result) => {
-    if (error) { return reject(new Error(error)); }
+    if (error) { return reject(error); }
     if (result.items.length < 1 || !result.items[0]) { return resolve(undefined); }
     const video = result.items[0];
     video.link = `https://www.youtube.com/watch?v=${video.id}`;
@@ -49,7 +49,7 @@ export const fetchFromYoutube = (options: Object) => new Promise((resolve, rejec
   const youtube = new Youtube();
   youtube.setKey(options.token);
   youtube.search(options.query, options.results, (error, results) => {
-    if (error) { return reject(new Error(error)); }
+    if (error) { return reject(new Error('Bad request, make sure you have a valid token!')); }
     if (results.items.length === 0) { return reject(new Error('No YouTube results!')); }
     return Promise.map(results.items, res => expandYoutube(youtube, res), { concurrency: 50 })
     .then((videos) => {
