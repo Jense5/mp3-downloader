@@ -1,73 +1,37 @@
 
 <h1 align="center">Music Downloader</h1>
-
-<p align="center">
-  <img src="https://image.flaticon.com/icons/svg/0/61.svg" width="150">
-</p>
-
-<h3 align="center" style="font-family:monospace">DEVELOPERS ONLY</h3>
-
-### Default scripts
+<h4 align="center">QuickStart</h4>
 
 ```sh
-$ npm install           # Install dependencies
-$ npm run start         # Start the build cli
-$ npm run build         # Build the source
-$ npm run build:watch   # Watch the build
-$ npm run test          # Run the tests
-$ npm run test:watch    # Watch the tests
-$ npm run cover         # Run the tests with coverage
-$ npm run cover:check   # Check if there is enough coverage
-$ npm run cover:report  # Push coverage report to codecov
+# Install it on your system.
+$ npm install mp3-downloader -g
+
+# You will need a Youtube token to start because this tool uses
+# the API instead of a scraper. This way it shouldn't be updated
+# whenever the site changes. See the guide below to get one.
+$ mp3 --token "XYZ" --save-token
+
+# From now on, download music as much as you want. If no output
+# location is provided, your current working directory will be used.
+$ mp3 "Byte Martin Garrix" --output "~/Desktop"
+
+# You can override the token if you have to.
+$ mp3 "Byte Martin Garrix" --token "ABC"
+
+# It's also possible to limit the number of results to check when
+# connecting to the Youtube API.
+$ mp3 "Byte Martin Garrix" --results 25
+
+# For more info, check the help.
+$ mp3 --help
 ```
 
-### Setup Automated Releases
+<h4 align="center">Get a Youtube Token</h4>
 
-```sh
-# Install the tools
-$ npm install -g semantic-release-cli
-$ npm install --save commitizen cz-conventional-changelog
-$ semantic-release-cli setup
-```
-
-```yml
-# Add script to Travis (replaces prepublish) and enable on the website
-# Also enable codecov for coverage
-branches:
-  only:
-    - master
-script:
-  - npm run cover
-  - npm run build
-after_success:
-  - npm run cover:report
-```
-
-```js
-// Update package.json with bins
-{
-  "scripts": { "commit": "git-cz" },
-  "czConfig": { "path": "node_modules/cz-conventional-changelog" }
-}
-```
-
-```sh
-# You can now commit with automated releases
-$ git add .
-$ npm run commit
-```
+Go to the [Google Developer Console](https://console.developers.google.com) and create a free YouTube Data API token. You can use this token to download music with this command line tool. Have fun!
 
 <br />
 <p align="center">
   <a href="https://js.org" target="_blank" title="JS.ORG | JavaScript Community">
   <img src="https://logo.js.org/dark_horz.png" width="102" alt="JS.ORG Logo"/></a>
 </p>
-
-### Options
-
-- query
-- directory
-- token
-- results
-
-We have to add a return statement on line 161 of youtube-dl.js of youtube-dl in order to get progress stats!

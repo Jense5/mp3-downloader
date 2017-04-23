@@ -1,15 +1,20 @@
 {
-  "name": "music-downloader",
-  "version": "0.0.0-dev.0",
-  "description": "A simple command line music downloader from YouTube",
-  "repository": "https://github.com/Jense5/music-downloader",
+  "name": "mp3-downloader",
+  "version": "3.0.0",
+  "description": "A simple command line music downloader with metadata",
+  "repository": "https://github.com/Jense5/mp3-downloader.git",
   "author": [
     "Jensen Bernard <jensenbernard5@gmail.com> (twitter.com/Jense5_)",
     "Jochen Bernard <jochenbernard@gmail.com>"
   ],
   "license": "MIT",
   "keywords": [
-    "music-downloader"
+    "mp3",
+    "music",
+    "download",
+    "tags",
+    "metadata",
+    "itunes"
   ],
   "files": [
     "dist",
@@ -17,7 +22,7 @@
   ],
   "main": "./dist/index.js",
   "bin": {
-    "music-downloader": "./dist/cli.js"
+    "mp3": "./dist/cli.js"
   },
   "scripts": {
     "start": "node ./dist/cli.js",
