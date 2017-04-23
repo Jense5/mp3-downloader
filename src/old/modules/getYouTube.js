@@ -29,7 +29,7 @@ function getYoutube(searchQuery, trackTimeMillis, timeSpan, startingPoint, maxRe
 
           const video = result.items[0];
 
-          if (found === false && video !== undefined && video.kind === 'youtube#video') {
+          if (!found && !!video&& video.kind === 'youtube#video') {
             video.link = 'https://www.youtube.com/watch?v=' + video.id;
             video.durationMillis = timeConverter(video.contentDetails.duration)
 

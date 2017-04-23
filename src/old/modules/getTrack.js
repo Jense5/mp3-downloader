@@ -4,13 +4,12 @@ const getYoutube = require('./getYoutube.js');
 function getTrack(searchQuery, callback) {
   getiTunes(searchQuery, function(song) {
     song.fileName = song.artistName + ' - ' + song.trackCensoredName;
-    song.searchQuery = song.fileName;
     song.path = {
       file: process.cwd() + '/' + song.fileName + '.mp3',
       image: process.cwd() + '/' + song.fileName + '.jpg'
     }
 
-    getYoutube(song.searchQuery, song.trackTimeMillis, 1000, 0, 10, function(video) {
+    getYoutube(song.fileName, song.trackTimeMillis, 1000, 0, 10, function(video) {
       callback(song, video);
     });
   });
