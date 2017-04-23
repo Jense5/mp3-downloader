@@ -48,7 +48,7 @@ export const fetchFromYoutube = (options: Object) => new Promise((resolve, rejec
   if (options.verbose) { spinner.text = 'Finding Youtube match...'; }
   const youtube = new Youtube();
   youtube.setKey(options.token);
-  youtube.search(options.query, options.results, (error, results) => {
+  youtube.search(options.filename, options.results, (error, results) => {
     if (error) { return reject(new Error('Bad request, make sure you have a valid token!')); }
     if (results.items.length === 0) { return reject(new Error('No YouTube results!')); }
     return Promise.map(results.items, res => expandYoutube(youtube, res), { concurrency: 50 })
