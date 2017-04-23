@@ -2,8 +2,8 @@
 <h1 align="center">Music Downloader</h1>
 
 <p align="center">
-![version](https://img.shields.io/npm/v/mp3-downloader.svg)
-![downloads](https://img.shields.io/npm/dt/mp3-downloader.svg)
+ <img src="https://img.shields.io/npm/v/mp3-downloader.svg" />
+ <img src="https://img.shields.io/npm/dt/mp3-downloader.svg" />
 </p>
 
 Command line tool to download mp3 files with metadata! All information, including album arts, are fetched from iTunes. Youtube is used to download the music. The correct result from Youtube is matched on the first result of iTunes based on the time in milliseconds. Make sure to get your free Youtube Data API token from the Google Developer Console.
