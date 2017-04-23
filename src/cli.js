@@ -7,20 +7,33 @@ import chalk from 'chalk';
 import winston from 'winston';
 import commander from 'commander';
 
-import math from './index';
+import download from './index';
 
 const pkg = path.resolve(__dirname, '../package.json');
 const conf = JSON.parse(fs.readFileSync(pkg, 'utf8'));
 
 commander
 .version(conf.version)
-.usage('<options>')
-.option('-s, --sample', 'Add sample')
-.option('-n, --number [number]', 'Sample number', parseInt)
+.usage('<options> query')
+.option('-o, --output [output]', 'Output directory')
+.option('-t, --token [token]', 'Youtube authentication token')
+.option('-r, --results [results]', 'Max results to check', parseInt)
 .parse(process.argv);
 
-const number = commander.number || 3;
+if (commander.args.length < 1) {
+  winston.error(chalk.red.bold('No query provided!'));
+  process.exit();
+}
 
-winston.info(`${chalk.green('Hello world!')}`);
-if (commander.sample) { winston.info(`${chalk.blue('Sample: ')} true`); }
-winston.info(`${chalk.green('Result:')} ${math.add(1, number)}`);
+if (!commander.token) {
+  winston.error(chalk.red.bold('No token provided!'));
+  process.exit();
+}
+
+download({
+  results: commander.results || 25,
+  query: commander.args.join(' '),
+  directory: commander.output || process.cwd(),
+  token: commander.token, // 'AIzaSyCW6fU6Zn1sXqZwTGoQfcTjr5Rcd5VN4bA',
+  spinner: true,
+});

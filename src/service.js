@@ -30,7 +30,7 @@ const expandYoutube = (youtube, element) => new Promise((resolve, reject) => {
 });
 
 export const fetchFromiTunes = (options: Object) => iTunes.fetch(options.query).then((data) => {
-  spinner.text = 'Fetching iTunes data...';
+  if (options.spinner) { spinner.text = 'Fetching iTunes data...'; }
   if (data.results.length < 1) { throw new Error('No results!'); }
   const tracks = data.results.filter(res => res.kind === 'song');
   if (tracks.length < 1) { throw new Error('No tracks!'); }
@@ -44,7 +44,7 @@ export const fetchFromiTunes = (options: Object) => iTunes.fetch(options.query).
 });
 
 export const fetchFromYoutube = (options: Object) => new Promise((resolve, reject) => {
-  spinner.text = 'Finding Youtube match...';
+  if (options.spinner) { spinner.text = 'Finding Youtube match...'; }
   const youtube = new Youtube();
   youtube.setKey(options.token);
   youtube.search(options.query, options.results, (error, results) => {
@@ -63,7 +63,7 @@ export const fetchFromYoutube = (options: Object) => new Promise((resolve, rejec
 });
 
 export const setMetadata = (options: Object) => new Promise((resolve, reject) => {
-  spinner.text = 'Writing metadata...';
+  if (options.spinner) { spinner.text = 'Writing metadata...'; }
   http.get(options.artworkUrl512, (response) => {
     if (response.statusCode === 200) {
       response.pipe(fs.createWriteStream(options.path.image)).on('finish', () => {
@@ -86,7 +86,7 @@ export const setMetadata = (options: Object) => new Promise((resolve, reject) =>
 });
 
 export const download = (options: Object) => new Promise((resolve, reject) => {
-  spinner.text = 'Downloading track...';
+  if (options.spinner) { spinner.text = 'Downloading track...'; }
   const conf = [
     '--extract-audio',
     '--audio-quality=0',
@@ -103,7 +103,7 @@ export const download = (options: Object) => new Promise((resolve, reject) => {
     if (matches && matches.length && matches.length > 0) {
       const percentage = matches[0];
       const text = percentage !== '100%' ? `Downloading track... ${percentage}` : 'Converting...';
-      spinner.text = text;
+      if (options.spinner) { spinner.text = text; }  
     }
   });
 });
