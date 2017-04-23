@@ -6,7 +6,7 @@ import path from 'path';
 import nodeID3 from 'node-id3';
 import Promise from 'bluebird';
 import Youtube from 'youtube-node';
-import YoutubeDL from 'youtube-dl';
+import YoutubeDL from 'youtube-dl-status';
 import { iTunes } from 'itunes-info';
 import spinner from './spinner';
 
@@ -103,7 +103,7 @@ export const download = (options: Object) => new Promise((resolve, reject) => {
     if (matches && matches.length && matches.length > 0) {
       const percentage = matches[0];
       const text = percentage !== '100%' ? `Downloading track... ${percentage}` : 'Converting...';
-      if (options.spinner) { spinner.text = text; }  
+      if (options.spinner) { spinner.text = text; }
     }
   });
 });
