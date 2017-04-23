@@ -5,10 +5,11 @@ import http from 'http';
 import path from 'path';
 import nodeID3 from 'node-id3';
 import Promise from 'bluebird';
-import Youtube from 'youtube-node';
-import YoutubeDL from 'youtube-dl-status';
-import { iTunes } from 'itunes-info';
 import spinner from './spinner';
+import untildify from 'untildify';
+import Youtube from 'youtube-node';
+import { iTunes } from 'itunes-info';
+import YoutubeDL from 'youtube-dl-status';
 
 const timeStrToMillis = (str) => {
   const units = { S: 1000, M: 1000 * 60, H: 1000 * 60 * 60, D: 1000 * 60 * 60 * 24 };
@@ -30,21 +31,21 @@ const expandYoutube = (youtube, element) => new Promise((resolve, reject) => {
 });
 
 export const fetchFromiTunes = (options: Object) => iTunes.fetch(options.query).then((data) => {
-  if (options.spinner) { spinner.text = 'Fetching iTunes data...'; }
+  if (options.verbose) { spinner.text = 'Fetching iTunes data...'; }
   if (data.results.length < 1) { throw new Error('No results!'); }
   const tracks = data.results.filter(res => res.kind === 'song');
   if (tracks.length < 1) { throw new Error('No tracks!'); }
   tracks[0].artworkUrl512 = tracks[0].artworkUrl100.replace('100x100', '512x512');
   tracks[0].filename = `${tracks[0].artistName} - ${tracks[0].trackCensoredName}`;
   tracks[0].path = {
-    file: path.resolve(options.directory, `${tracks[0].filename}.mp3`),
-    image: path.resolve(options.directory, `${tracks[0].filename}.jpg`),
+    file: path.resolve(untildify(options.directory), `${tracks[0].filename}.mp3`),
+    image: path.resolve(untildify(options.directory), `${tracks[0].filename}.jpg`),
   };
   return tracks[0];
 });
 
 export const fetchFromYoutube = (options: Object) => new Promise((resolve, reject) => {
-  if (options.spinner) { spinner.text = 'Finding Youtube match...'; }
+  if (options.verbose) { spinner.text = 'Finding Youtube match...'; }
   const youtube = new Youtube();
   youtube.setKey(options.token);
   youtube.search(options.query, options.results, (error, results) => {
@@ -63,7 +64,7 @@ export const fetchFromYoutube = (options: Object) => new Promise((resolve, rejec
 });
 
 export const setMetadata = (options: Object) => new Promise((resolve, reject) => {
-  if (options.spinner) { spinner.text = 'Writing metadata...'; }
+  if (options.verbose) { spinner.text = 'Writing metadata...'; }
   http.get(options.artworkUrl512, (response) => {
     if (response.statusCode === 200) {
       response.pipe(fs.createWriteStream(options.path.image)).on('finish', () => {
@@ -86,13 +87,13 @@ export const setMetadata = (options: Object) => new Promise((resolve, reject) =>
 });
 
 export const download = (options: Object) => new Promise((resolve, reject) => {
-  if (options.spinner) { spinner.text = 'Downloading track...'; }
+  if (options.verbose) { spinner.text = 'Starting download...'; }
   const conf = [
     '--extract-audio',
     '--audio-quality=0',
     '--format=bestaudio',
     '--audio-format=mp3',
-    `--output=${path.resolve(options.directory, `${options.filename}.%(ext)s`)}`,
+    `--output=${path.resolve(untildify(options.directory), `${options.filename}.%(ext)s`)}`,
   ];
   const downloadProcess = YoutubeDL.exec(options.link, conf, () => {
     setMetadata(options).then(resolve).catch(reject);
@@ -103,7 +104,7 @@ export const download = (options: Object) => new Promise((resolve, reject) => {
     if (matches && matches.length && matches.length > 0) {
       const percentage = matches[0];
       const text = percentage !== '100%' ? `Downloading track... ${percentage}` : 'Converting...';
-      if (options.spinner) { spinner.text = text; }
+      if (options.verbose) { spinner.text = text; }
     }
   });
 });

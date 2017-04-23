@@ -9,6 +9,9 @@ import commander from 'commander';
 
 import download from './index';
 
+winston.remove(winston.transports.Console);
+winston.add(winston.transports.Console, { showLevel: false });
+
 const pkg = path.resolve(__dirname, '../package.json');
 const conf = JSON.parse(fs.readFileSync(pkg, 'utf8'));
 
@@ -35,5 +38,5 @@ download({
   query: commander.args.join(' '),
   directory: commander.output || process.cwd(),
   token: commander.token, // 'AIzaSyCW6fU6Zn1sXqZwTGoQfcTjr5Rcd5VN4bA',
-  spinner: true,
+  verbose: true,
 });

@@ -40,6 +40,8 @@
     "itunes-info": "^0.4.1",
     "node-id3": "^0.0.9",
     "ora": "^1.2.0",
+    "tic-toc": "^0.1.0",
+    "untildify": "^3.0.2",
     "winston": "^2.3.0",
     "youtube-dl-status": "^0.1.0",
     "youtube-node": "^1.3.0"
