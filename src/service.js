@@ -5,11 +5,11 @@ import http from 'http';
 import path from 'path';
 import nodeID3 from 'node-id3';
 import Promise from 'bluebird';
-import spinner from './spinner';
 import untildify from 'untildify';
 import Youtube from 'youtube-node';
 import { iTunes } from 'itunes-info';
 import YoutubeDL from 'youtube-dl-status';
+import spinner from './spinner';
 
 const timeStrToMillis = (str) => {
   const units = { S: 1000, M: 1000 * 60, H: 1000 * 60 * 60, D: 1000 * 60 * 60 * 24 };
