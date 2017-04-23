@@ -27,6 +27,7 @@ $ mp3 "Byte Martin Garrix" --results 25
 # For more info, check the help.
 $ mp3 --help
 ```
+<br />
 <p align="center">
   <a href="https://js.org" target="_blank" title="JS.ORG | JavaScript Community">
   <img src="https://logo.js.org/dark_horz.png" width="102" alt="JS.ORG Logo"/></a>
