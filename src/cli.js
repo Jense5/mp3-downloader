@@ -21,11 +21,14 @@ const conf = JSON.parse(fs.readFileSync(pkg, 'utf8'));
 commander
 .version(conf.version)
 .usage('<options> query')
+.option('-d, --debug', 'Enable debug mode')
 .option('-o, --output [output]', 'Output directory')
 .option('-t, --token [token]', 'Youtube authentication token')
 .option('-r, --results [results]', 'Max results to check', parseInt)
 .option('-s, --save-token', 'Store the Youtube authentication token for future use')
 .parse(process.argv);
+
+if (commander.debug) { winston.level = 'debug'; }
 
 const token = commander.token || Store.read('token');
 if (commander.saveToken) { Store.write('token', token); }
@@ -43,6 +46,7 @@ download({
   results: commander.results || 25,
   query: commander.args.join(' '),
   directory: commander.output || process.cwd(),
+  debug: commander.debug,
   verbose: true,
   token, // 'AIzaSyCW6fU6Zn1sXqZwTGoQfcTjr5Rcd5VN4bA',
 });

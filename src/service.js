@@ -3,6 +3,7 @@
 import fs from 'fs';
 import http from 'http';
 import path from 'path';
+import winston from 'winston';
 import nodeID3 from 'node-id3';
 import Promise from 'bluebird';
 import untildify from 'untildify';
@@ -31,41 +32,58 @@ const expandYoutube = (youtube, element) => new Promise((resolve, reject) => {
 });
 
 export const fetchFromiTunes = (options: Object) => iTunes.fetch(options.query).then((data) => {
-  if (options.verbose) { spinner.text = 'Fetching iTunes data...'; }
-  if (data.results.length < 1) { throw new Error('No results!'); }
-  const tracks = data.results.filter(res => res.kind === 'song');
-  if (tracks.length < 1) { throw new Error('No tracks!'); }
-  tracks[0].artworkUrl512 = tracks[0].artworkUrl100.replace('100x100', '512x512');
-  tracks[0].filename = `${tracks[0].artistName} - ${tracks[0].trackCensoredName}`;
-  tracks[0].path = {
-    file: path.resolve(untildify(options.directory), `${tracks[0].filename}.mp3`),
-    image: path.resolve(untildify(options.directory), `${tracks[0].filename}.jpg`),
-  };
-  return tracks[0];
+  if (options.verbose && !options.debug) { spinner.text('Fetched iTunes data...'); }
+  winston.debug('Fetched iTunes data...');
+  winston.debug(`Received a total of ${data.results.length} results.`);
+  if (data.results.length > 0) {
+    const tracks = data.results.filter(res => res.kind === 'song');
+    if (tracks.length < 1) { throw new Error('No tracks!'); }
+    tracks[0].artworkUrl512 = tracks[0].artworkUrl100.replace('100x100', '512x512');
+    tracks[0].filename = `${tracks[0].artistName} - ${tracks[0].trackCensoredName}`;
+    tracks[0].path = {
+      file: path.resolve(untildify(options.directory), `${tracks[0].filename}.mp3`),
+      image: path.resolve(untildify(options.directory), `${tracks[0].filename}.jpg`),
+    };
+    tracks[0].isiTunesResult = true;
+    winston.debug(`Will take this track to proceed: ${JSON.stringify(tracks[0], null, 4)}`);
+    return tracks[0];
+  }
+  if (options.verbose && !options.debug) {
+    spinner.warn('Couldn\'t find this track on iTunes.');
+    spinner.warn('The download will start, but without the metadata.');
+  }
+  winston.debug('No results, will proceed without tagging...');
+  return { isiTunesResult: false };
 });
 
 export const fetchFromYoutube = (options: Object) => new Promise((resolve, reject) => {
-  if (options.verbose) { spinner.text = 'Finding Youtube match...'; }
+  if (options.verbose && !options.debug) { spinner.text('Finding Youtube match...'); }
+  winston.debug('Finding a Youtube match...');
   const youtube = new Youtube();
   youtube.setKey(options.token);
-  youtube.search(options.filename, options.results, (error, results) => {
-    if (error) { return reject(new Error('Bad request, make sure you have a valid token!')); }
+  const query = options.isiTunesResult ? options.filename : options.query;
+  youtube.search(query, options.results, (error, results) => {
+    if (error) { return reject(new Error('Bad Youtube request, make sure you have a valid token!')); }
+    winston.debug(`Found a total of ${results.items.length} tracks on Youtube.`);
     if (results.items.length === 0) { return reject(new Error('No YouTube results!')); }
     return Promise.map(results.items, res => expandYoutube(youtube, res), { concurrency: 50 })
     .then((videos) => {
       const list = videos.filter(v => !!v);
+      if (!options.isiTunesResult) { return resolve({ ...options, ...list[0] }); }
       list.forEach((res) => {
         res.timeDifference = Math.abs(res.durationMillis - options.trackTimeMillis);
       });
       list.sort((a, b) => a.timeDifference - b.timeDifference);
-      resolve({ ...options, ...list[0] });
+      return resolve({ ...options, ...list[0] });
     });
   });
 });
 
 export const setMetadata = (options: Object) => new Promise((resolve, reject) => {
-  if (options.verbose) { spinner.text = 'Writing metadata...'; }
-  http.get(options.artworkUrl512, (response) => {
+  if (options.verbose && !options.debug) { spinner.text('Writing metadata...'); }
+  winston.debug('Writing metadata...');
+  if (!options.isiTunesResult) { return resolve('Finished without metadata.'); }
+  return http.get(options.artworkUrl512, (response) => {
     if (response.statusCode === 200) {
       response.pipe(fs.createWriteStream(options.path.image)).on('finish', () => {
         nodeID3.removeTags(options.path.file);
@@ -87,13 +105,15 @@ export const setMetadata = (options: Object) => new Promise((resolve, reject) =>
 });
 
 export const download = (options: Object) => new Promise((resolve, reject) => {
-  if (options.verbose) { spinner.text = 'Starting download...'; }
+  if (options.verbose && !options.debug) { spinner.text('Starting download...'); }
+  winston.debug('Starting download...');
+  const filename = options.isiTunesResult ? options.filename : options.query;
   const conf = [
     '--extract-audio',
     '--audio-quality=0',
     '--format=bestaudio',
     '--audio-format=mp3',
-    `--output=${path.resolve(untildify(options.directory), `${options.filename}.%(ext)s`)}`,
+    `--output=${path.resolve(untildify(options.directory), `${filename}.%(ext)s`)}`,
   ];
   const downloadProcess = YoutubeDL.exec(options.link, conf, () => {
     setMetadata(options).then(resolve).catch(reject);
@@ -104,7 +124,8 @@ export const download = (options: Object) => new Promise((resolve, reject) => {
     if (matches && matches.length && matches.length > 0) {
       const percentage = matches[0];
       const text = percentage !== '100%' ? `Downloading track... ${percentage}` : 'Converting...';
-      if (options.verbose) { spinner.text = text; }
+      if (options.verbose && !options.debug) { spinner.text(text); }
+      winston.debug(text);
     }
   });
 });
