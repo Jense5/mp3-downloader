@@ -48,7 +48,6 @@ if (commander.args.length < 1) {
 
 const options = {
   directory: commander.output || process.cwd(),
-  results: commander.results || 25,
   query: commander.args.join(' '),
   debug: commander.debug,
   verbose: true,
@@ -75,6 +74,6 @@ downloader.on('success', () => {
 
 downloader.on('fail', (error) => {
   if (db) { return winston.error(`Failed with error: ${error.message}`); }
-  if (vb) { return spinner.fail(error.message); }
+  if (vb) { return error.message.split('\n').map(e => spinner.fail(e)); }
   return undefined;
 });

@@ -106,6 +106,11 @@ export const fetchFromYoutube = (options: Object) => new Promise((resolve, rejec
     .then((videos) => {
       const list = videos.filter(v => !!v);
       emitter.log(`Found a total of ${list.length} valid videos on Youtube.`);
+      if (list.length === 0) {
+        if (options.filename) {
+          return reject(new Error(`The first result of iTunes is ${options.filename}.\nHowever, there are no youtube results for this title.\nIf this was not your desired result, please provide a more specific query.`));
+        }
+      }
       if (!options.filename) {
         emitter.log(`Will use this Youtube result:\n${chalk.cyan(JSON.stringify(list[0], null, 4))}`);
         return resolve({ ...options, ...list[0] });
