@@ -18,12 +18,13 @@ import Emitter from './emitter';
  * @param {string} str The string provided by Youtube.
  * @returns {number} The total amount of millis.
  */
-const timeStrToMillis = (str) => {
+export const timeStrToMillis = (str: string) => {
   const units = { S: 1000, M: 1000 * 60, H: 1000 * 60 * 60, D: 1000 * 60 * 60 * 24 };
-  const content = str.replace('PT', '');
+  const content = str.replace('PT', '') || '';
   const numbers = content.split(/\D/g).filter(e => !!e);
-  const symbols = content.match(/\D/g).filter(e => !!e);
-  const result = numbers.reduce((a, b, i) => a + (b * units[symbols[i]]), 0);
+  const rawSymbols = content.match(/\D/g) || [];
+  const symbols = rawSymbols.filter(e => !!e);
+  const result = numbers.reduce((a, b, i) => a + (parseInt(b, 10) * units[symbols[i]]), 0);
   return result;
 };
 
@@ -70,8 +71,8 @@ export const fetchFromiTunes = (options: Object) => {
     tracks[0].artworkUrl512 = tracks[0].artworkUrl100.replace('100x100', '512x512');
     tracks[0].filename = `${tracks[0].artistName} - ${tracks[0].trackCensoredName}`;
     tracks[0].path = {
-      file: path.resolve(untildify(options.directory) || process.cwd(), `${tracks[0].filename}.mp3`),
-      image: path.resolve(untildify(options.directory) || process.cwd(), `${tracks[0].filename}.jpg`),
+      file: path.resolve(untildify(options.directory || process.cwd()), `${tracks[0].filename}.mp3`),
+      image: path.resolve(untildify(options.directory || process.cwd()), `${tracks[0].filename}.jpg`),
     };
     emitter.log(`Will take this track to proceed:\n${chalk.cyan(JSON.stringify(tracks[0], null, 4))}`);
     return { ...options, ...tracks[0] };
