@@ -8,6 +8,7 @@ import winston from 'winston';
 import commander from 'commander';
 import Store from 'node-user-defaults';
 import { toc } from 'tic-toc';
+import Promise from 'bluebird';
 import spinner from './spinner';
 
 import download from './index';
@@ -24,6 +25,7 @@ commander
 .version(conf.version)
 .usage('<options> query')
 .option('-d, --debug', 'Enable debug mode')
+.option('-b --bulk [file]', 'Bulk file, one query per line')
 .option('-f, --force [url]', 'Youtube url to use')
 .option('-o, --output [output]', 'Output directory')
 .option('-t, --token [token]', 'Youtube authentication token')
@@ -42,40 +44,61 @@ if (!token) {
   process.exit();
 }
 
-if (commander.args.length < 1) {
+if (commander.bulk) {
+  const location = path.resolve(process.cwd(), commander.bulk);
+  if (!fs.existsSync(location)) {
+    winston.error(chalk.red.bold('Bulk file does not exist!'));
+    process.exit();
+  }
+} else if (commander.args.length < 1) {
   winston.error(chalk.red.bold('No query provided!'));
   process.exit();
 }
 
+let queries = [];
+
+if (commander.bulk) {
+  const location = path.resolve(process.cwd(), commander.bulk);
+  queries = fs.readFileSync(location, 'utf8').split('\n');
+} else {
+  queries = [commander.args.join(' ')];
+}
+
 const options = {
   directory: commander.output || process.cwd(),
-  query: commander.args.join(' '),
   debug: commander.debug,
   link: commander.force,
   verbose: true,
   token,
 };
 
+const allOptions = queries.filter(q => !!q).map(query => ({ ...options, query }));
+
 // DOWNLOAD STARTS FROM HERE. EVENTS WILL BE EMITTED.
 
-const db = options.debug;
-const vb = options.verbose;
-if (!db && vb) { spinner.start(); }
+const downloadSingleOptions = (args: Object) => new Promise((resolve) => {
+  const db = args.debug;
+  const vb = args.verbose;
+  if (!db && vb) { spinner.start(); }
 
-const downloader = download(options);
-downloader.on('log', (...params) => { if (db) { winston.debug(...params); } });
-downloader.on('warning', (...params) => { if (!db && vb) { spinner.warn(...params); } });
-downloader.on('updateState', (...params) => { if (!db && vb) { spinner.text(...params); } });
+  const downloader = download(args);
+  downloader.on('log', (...params) => { if (db) { winston.debug(...params); } });
+  downloader.on('warning', (...params) => { if (!db && vb) { spinner.warn(...params); } });
+  downloader.on('updateState', (...params) => { if (!db && vb) { spinner.text(...params); } });
 
-downloader.on('success', () => {
-  if (db) { return winston.debug(`Completed in ${Math.round(toc() * 100) / 100}s.`); }
-  if (!vb) { return undefined; }
-  const time = Math.round(toc() * 100) / 100;
-  return spinner.succeed(`Download complete in ${chalk.bold(`${time}s`)}!`);
+  downloader.on('success', () => {
+    if (db) { return winston.debug(`Completed in ${Math.round(toc() * 100) / 100}s.`); }
+    if (!vb) { return undefined; }
+    const time = Math.round(toc() * 100) / 100;
+    spinner.succeed(`Download of ${chalk.bold(args.query)} complete in ${chalk.bold(`${time}s`)}!`);
+    return resolve();
+  });
+
+  downloader.on('fail', (error) => {
+    if (db) { return winston.error(`Failed with error: ${error.message}`); }
+    if (vb) { return error.message.split('\n').map(e => spinner.fail(e)); }
+    return undefined;
+  });
 });
 
-downloader.on('fail', (error) => {
-  if (db) { return winston.error(`Failed with error: ${error.message}`); }
-  if (vb) { return error.message.split('\n').map(e => spinner.fail(e)); }
-  return undefined;
-});
+Promise.map(allOptions, opt => downloadSingleOptions(opt), { concurrency: 1 });
