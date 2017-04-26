@@ -24,6 +24,7 @@ commander
 .version(conf.version)
 .usage('<options> query')
 .option('-d, --debug', 'Enable debug mode')
+.option('-f, --force [url]', 'Youtube url to use')
 .option('-o, --output [output]', 'Output directory')
 .option('-t, --token [token]', 'Youtube authentication token')
 .option('-r, --results [results]', 'Max results to check', parseInt)
@@ -50,6 +51,7 @@ const options = {
   directory: commander.output || process.cwd(),
   query: commander.args.join(' '),
   debug: commander.debug,
+  link: commander.force,
   verbose: true,
   token,
 };

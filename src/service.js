@@ -91,6 +91,7 @@ export const fetchFromiTunes = (options: Object) => {
  * @return {Promise<Object>} Promise with video details, merged with the options!
  */
 export const fetchFromYoutube = (options: Object) => new Promise((resolve, reject) => {
+  if (options.link) { return resolve(options); }
   const emitter = options.emitter || new Emitter();
   emitter.updateState('Finding a Youtube match...');
   emitter.log(`Using "${options.token || ''}" as token for Youtube.`);
@@ -98,7 +99,7 @@ export const fetchFromYoutube = (options: Object) => new Promise((resolve, rejec
   youtube.setKey(options.token);
   const query = options.filename || options.query || '';
   emitter.log(`Using Youtube query: ${query}`);
-  youtube.search(query, options.results || 50, (error, results) => {
+  return youtube.search(query, options.results || 50, (error, results) => {
     if (error) { return reject(new Error('Bad Youtube request, do you use a valid token?')); }
     emitter.log(`Found a total of ${results.items.length} tracks on Youtube.`);
     if (results.items.length === 0) { return reject(new Error('No YouTube results found!')); }
