@@ -67,7 +67,7 @@ downloader.on('warning', (...params) => { if (!db && vb) { spinner.warn(...param
 downloader.on('updateState', (...params) => { if (!db && vb) { spinner.text(...params); } });
 
 downloader.on('success', () => {
-  if (db) { return winston.debug(`Completed in ${Math.round(toc() * 100) / 100}s`); }
+  if (db) { return winston.debug(`Completed in ${Math.round(toc() * 100) / 100}s.`); }
   if (!vb) { return undefined; }
   const time = Math.round(toc() * 100) / 100;
   return spinner.succeed(`Download complete in ${chalk.bold(`${time}s`)}!`);
