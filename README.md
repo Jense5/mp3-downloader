@@ -1,8 +1,6 @@
 
 <h1>Music Downloader</h1>
 
-**Version 3.2.0-0 - Only use for testing purposes. Otherwise use v3.1.1.**
-
 Command line tool to download mp3 files with metadata! All information, including album arts, are fetched from iTunes. Youtube is used to download the music. The correct result from Youtube is matched on the first result of iTunes based on the time in milliseconds. Make sure to get your free Youtube Data API token from the Google Developer Console.
 
 # Installation & basic usage
