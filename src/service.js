@@ -54,12 +54,13 @@ const expandYoutube = (youtube, element) => new Promise((resolve, reject) => {
  * @param {?string} options.query The query to send to the iTunes store.
  * @param {?Emitter} options.emitter Optional EventEmitter.
  * @param {?string} options.directory The directory of the track to download to.
+ * @param {?string} options.store The country of which iTunes store to search
  * @return {Promise<Object>} Promise with track details, merged with the options!
  */
 export const fetchFromiTunes = (options: Object) => {
   const emitter = options.emitter || new Emitter();
   emitter.updateState('Connecting to iTunes...');
-  return iTunes.fetch(options.query || '').then((data) => {
+  return iTunes.fetch(options.query || '', options.store).then((data) => {
     emitter.updateState('Fetched iTunes data...');
     emitter.log(`Received a total of ${data.results.length} results.`);
     const tracks = data.results.filter(res => res.kind === 'song');

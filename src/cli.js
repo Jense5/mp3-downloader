@@ -25,8 +25,9 @@ commander
 .version(conf.version)
 .usage('<options> query')
 .option('-d, --debug', 'Enable debug mode')
-.option('-b --bulk [file]', 'Bulk file, one query per line')
+.option('-b, --bulk [file]', 'Bulk file, one query per line')
 .option('-f, --force [url]', 'Youtube url to use')
+.option('-c, --country [country]', 'Specify which country of the iTunes store to search')
 .option('-o, --output [output]', 'Output directory')
 .option('-t, --token [token]', 'Youtube authentication token')
 .option('-r, --results [results]', 'Max results to check', parseInt)
@@ -68,6 +69,7 @@ const options = {
   directory: commander.output || process.cwd(),
   debug: commander.debug,
   link: commander.force,
+  store: commander.country,
   verbose: true,
   token,
 };
