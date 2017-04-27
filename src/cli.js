@@ -7,6 +7,7 @@ import chalk from 'chalk';
 import winston from 'winston';
 import commander from 'commander';
 import Store from 'node-user-defaults';
+import CountryLanguage from 'country-language';
 import { toc } from 'tic-toc';
 import Promise from 'bluebird';
 import spinner from './spinner';
@@ -65,11 +66,16 @@ if (commander.bulk) {
   queries = [commander.args.join(' ')];
 }
 
+
+if (commander.country && !CountryLanguage.countryCodeExists(commander.country)) {
+  spinner.warn(`Invalid country code ${commander.country} provided, using local one.`);
+}
+
 const options = {
   directory: commander.output || process.cwd(),
+  country: commander.country,
   debug: commander.debug,
   link: commander.force,
-  store: commander.country,
   verbose: true,
   token,
 };
@@ -98,7 +104,7 @@ const downloadSingleOptions = (args: Object) => new Promise((resolve) => {
 
   downloader.on('fail', (error) => {
     if (db) { return winston.error(`Failed with error: ${error.message}`); }
-    if (vb) { return error.message.split('\n').map(e => spinner.fail(e)); }
+    if (vb) { return !error ? spinner.fail('An unknown error occurred.') : error.message.split('\n').map(e => spinner.fail(e)); }
     return undefined;
   });
 });

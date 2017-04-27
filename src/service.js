@@ -60,9 +60,12 @@ const expandYoutube = (youtube, element) => new Promise((resolve, reject) => {
  */
 export const fetchFromiTunes = (options: Object) => {
   const emitter = options.emitter || new Emitter();
-  if (!CountryLanguage.countryCodeExists(options.country)) {}
+  let country = options.country;
+  if (options.country && !CountryLanguage.countryCodeExists(options.country)) {
+    country = undefined;
+  }
   emitter.updateState('Connecting to iTunes...');
-  return iTunes.fetch(options.query || '', options.store).then((data) => {
+  return iTunes.fetch(options.query || '', country).then((data) => {
     emitter.updateState('Fetched iTunes data...');
     emitter.log(`Received a total of ${data.results.length} results.`);
     const tracks = data.results.filter(res => res.kind === 'song');
