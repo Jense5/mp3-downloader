@@ -979,6 +979,13 @@ core-util-is@~1.0.0:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/core-util-is/-/core-util-is-1.0.2.tgz#b5fd54220aa2bc5ab57aab7140c940754503c1a7"
 
+country-language@^0.1.7:
+  version "0.1.7"
+  resolved "https://registry.yarnpkg.com/country-language/-/country-language-0.1.7.tgz#7870f4ba125db9a6071f19737bd9ef9343ae35db"
+  dependencies:
+    underscore "~1.7.0"
+    underscore.deep "~0.5.1"
+
 cross-spawn@^4, cross-spawn@^4.0.0:
   version "4.0.2"
   resolved "https://registry.yarnpkg.com/cross-spawn/-/cross-spawn-4.0.2.tgz#7b9247621c23adfdd3856004a823cbe397424d41"
@@ -3282,6 +3289,14 @@ uglify-to-browserify@~1.0.0:
 uid-number@^0.0.6:
   version "0.0.6"
   resolved "https://registry.yarnpkg.com/uid-number/-/uid-number-0.0.6.tgz#0ea10e8035e8eb5b8e4449f06da1c730663baa81"
+
+underscore.deep@~0.5.1:
+  version "0.5.1"
+  resolved "https://registry.yarnpkg.com/underscore.deep/-/underscore.deep-0.5.1.tgz#072671f48d68735c34223fcfef63e69e5276cc2b"
+
+underscore@~1.7.0:
+  version "1.7.0"
+  resolved "https://registry.yarnpkg.com/underscore/-/underscore-1.7.0.tgz#6bbaf0877500d36be34ecaa584e0db9fef035209"
 
 untildify@^3.0.2:
   version "3.0.2"

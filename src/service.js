@@ -9,6 +9,7 @@ import Promise from 'bluebird';
 import untildify from 'untildify';
 import Youtube from 'youtube-node';
 import { iTunes } from 'itunes-info';
+import CountryLanguage from 'country-language';
 import YoutubeDL from 'youtube-dl-status';
 import Emitter from './emitter';
 
@@ -58,6 +59,7 @@ const expandYoutube = (youtube, element) => new Promise((resolve, reject) => {
  */
 export const fetchFromiTunes = (options: Object) => {
   const emitter = options.emitter || new Emitter();
+  if (!CountryLanguage.countryCodeExists(options.country)) {}
   emitter.updateState('Connecting to iTunes...');
   return iTunes.fetch(options.query || '').then((data) => {
     emitter.updateState('Fetched iTunes data...');
