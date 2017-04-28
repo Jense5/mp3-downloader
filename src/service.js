@@ -156,7 +156,6 @@ export const download = (options: Object) => new Promise((resolve) => {
     '--audio-quality=0',
     '--format=bestaudio',
     '--audio-format=mp3',
-    '--verbose',
     `--output=${path.resolve(untildify(options.directory) || process.cwd(), `${filename}.%(ext)s`)}`,
   ];
   const downloadProcess = YoutubeDL.exec(options.link, conf, () => { resolve(options); });
