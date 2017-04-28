@@ -9,7 +9,7 @@ import Promise from 'bluebird';
 import untildify from 'untildify';
 import Youtube from 'youtube-node';
 import { iTunes } from 'itunes-info';
-import CountryLanguage from 'country-language';
+import countryLookup from 'country-code-lookup';
 import YoutubeDL from 'youtube-dl-status';
 import Emitter from './emitter';
 
@@ -47,6 +47,13 @@ const expandYoutube = (youtube, element) => new Promise((resolve, reject) => {
   });
 });
 
+export const getTwoLetterCountryCode = (code: string) => {
+  if (code && code.length <= 3) {
+    return countryLookup.byIso(code).iso2;
+  }
+  return undefined;
+};
+
 /**
  * Fetch the data from iTunes for the given query. The query should be provided
  * as a 'query' option. An optional emitter can be provided too. The path of the
@@ -60,10 +67,7 @@ const expandYoutube = (youtube, element) => new Promise((resolve, reject) => {
  */
 export const fetchFromiTunes = (options: Object) => {
   const emitter = options.emitter || new Emitter();
-  let country = options.country;
-  if (options.country && !CountryLanguage.countryCodeExists(options.country)) {
-    country = undefined;
-  }
+  const country = getTwoLetterCountryCode(options.country);
   emitter.updateState('Connecting to iTunes...');
   return iTunes.fetch(options.query || '', country).then((data) => {
     emitter.updateState('Fetched iTunes data...');
@@ -152,10 +156,13 @@ export const download = (options: Object) => new Promise((resolve) => {
     '--audio-quality=0',
     '--format=bestaudio',
     '--audio-format=mp3',
+    '--verbose',
     `--output=${path.resolve(untildify(options.directory) || process.cwd(), `${filename}.%(ext)s`)}`,
   ];
   const downloadProcess = YoutubeDL.exec(options.link, conf, () => { resolve(options); });
   downloadProcess.stdout.on('data', (data) => {
+    console.log('erferferferferferferferf');
+    console.log(data);
     const re = /[0-9]+((\.[0-9]{1}){0,1})%/i;
     const matches = data.match(re);
     if (matches && matches.length && matches.length > 0) {

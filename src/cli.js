@@ -28,7 +28,7 @@ commander
 .option('-d, --debug', 'Enable debug mode')
 .option('-b, --bulk [file]', 'Bulk file, one query per line')
 .option('-f, --force [url]', 'Youtube url to use')
-.option('-c, --country [country]', 'Specify which country of the iTunes store to search')
+.option('-c, --country [country]', 'Specify which country of the iTunes store to search (alpha-2 or alpha-3 code)')
 .option('-o, --output [output]', 'Output directory')
 .option('-t, --token [token]', 'Youtube authentication token')
 .option('-r, --results [results]', 'Max results to check', parseInt)

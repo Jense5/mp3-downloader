@@ -4,6 +4,7 @@ import {
   fetchFromiTunes,
 } from '../src/service';
 
+
 describe('fetchFromiTunes', () => {
   it('should return correct iTunes result', (done) => {
     const options = { directory: '/some/path', query: 'nirvana teen spirit' };
