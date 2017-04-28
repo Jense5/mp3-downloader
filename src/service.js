@@ -161,8 +161,6 @@ export const download = (options: Object) => new Promise((resolve) => {
   ];
   const downloadProcess = YoutubeDL.exec(options.link, conf, () => { resolve(options); });
   downloadProcess.stdout.on('data', (data) => {
-    console.log('erferferferferferferferf');
-    console.log(data);
     const re = /[0-9]+((\.[0-9]{1}){0,1})%/i;
     const matches = data.match(re);
     if (matches && matches.length && matches.length > 0) {
