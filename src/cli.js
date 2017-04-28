@@ -65,11 +65,6 @@ if (commander.bulk) {
   queries = [commander.args.join(' ')];
 }
 
-
-if (commander.country && !CountryLanguage.countryCodeExists(commander.country)) {
-  spinner.warn(`Invalid country code ${commander.country} provided, using local one.`);
-}
-
 const options = {
   directory: commander.output || process.cwd(),
   country: commander.country,
