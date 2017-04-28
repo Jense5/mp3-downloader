@@ -2,6 +2,7 @@ import { expect } from 'chai';
 import {
   timeStrToMillis,
   fetchFromiTunes,
+  getTwoLetterCountryCode,
 } from '../src/service';
 
 
@@ -60,5 +61,20 @@ describe('Time Parser', () => {
     };
     times.valid.forEach(ti => expect(timeStrToMillis(ti.str)).to.equal(ti.time));
     times.invalid.forEach(ti => expect(timeStrToMillis(ti.str)).to.not.equal(ti.time));
+  });
+});
+
+describe('Country code test', () => {
+  it('should return the correct two letter country codes, else undefined', () => {
+    const countrycodes =
+      [{ in: 'BE', out: 'BE' },
+      { in: 'BEL', out: 'BE' },
+      { in: 'GBR', out: 'GB' },
+      { in: 'FRA', out: 'FR' },
+      { in: 'Belgium', out: undefined },
+      { in: 'WRONG', out: undefined },
+      { in: 'EIDZE', out: undefined },
+      { in: '234212', out: undefined }];
+    countrycodes.forEach(cc => expect(getTwoLetterCountryCode(cc.in)).to.equal(cc.out));
   });
 });
