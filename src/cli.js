@@ -7,7 +7,6 @@ import chalk from 'chalk';
 import winston from 'winston';
 import commander from 'commander';
 import Store from 'node-user-defaults';
-import CountryLanguage from 'country-language';
 import { toc } from 'tic-toc';
 import Promise from 'bluebird';
 import spinner from './spinner';
