@@ -7,7 +7,6 @@ import chalk from 'chalk';
 import winston from 'winston';
 import commander from 'commander';
 import Store from 'node-user-defaults';
-import CountryLanguage from 'country-language';
 import { toc } from 'tic-toc';
 import Promise from 'bluebird';
 import spinner from './spinner';
@@ -28,7 +27,7 @@ commander
 .option('-d, --debug', 'Enable debug mode')
 .option('-b, --bulk [file]', 'Bulk file, one query per line')
 .option('-f, --force [url]', 'Youtube url to use')
-.option('-c, --country [country]', 'Specify which country of the iTunes store to search')
+.option('-c, --country [country]', 'Specify which country of the iTunes store to search (alpha-2 or alpha-3 code)')
 .option('-o, --output [output]', 'Output directory')
 .option('-t, --token [token]', 'Youtube authentication token')
 .option('-r, --results [results]', 'Max results to check', parseInt)
@@ -64,11 +63,6 @@ if (commander.bulk) {
   queries = fs.readFileSync(location, 'utf8').split('\n');
 } else {
   queries = [commander.args.join(' ')];
-}
-
-
-if (commander.country && !CountryLanguage.countryCodeExists(commander.country)) {
-  spinner.warn(`Invalid country code ${commander.country} provided, using local one.`);
 }
 
 const options = {
